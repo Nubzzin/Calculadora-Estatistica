@@ -84,8 +84,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
-
-  // Você pode adicionar mais funcionalidades JavaScript aqui conforme necessário
 });
 
 document.querySelectorAll(".task").forEach((task) => {
