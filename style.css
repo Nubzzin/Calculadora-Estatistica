@@ -85,6 +85,10 @@ body {
     background-color: #f8f9fa;
 }
 
+.nav-item.deactive {
+    background-color: #c8c9ce;
+}
+
 .nav-item a {
     text-decoration: none;
     color: #2c3e50;
@@ -134,8 +138,9 @@ body {
     padding: 0.5rem 1rem;
     border-radius: 4px;
     cursor: pointer;
-    font-weight: 500;
+    font-weight: 800;
     transition: background-color 0.3s;
+    font-size: 1.1rem;
 }
 
 .btn-primary:hover {
@@ -182,21 +187,37 @@ body {
     color: #2c3e50;
 }
 
-/* Estilos da lista de tarefas */
-.task-list {
-    list-style: none;
-    margin: 15px 0;
+.task-body {
+  font-family: Arial, sans-serif;
+  justify-content: center;
+  align-items: center;
 }
 
-.task-list li {
-    padding: 8px 0;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    align-items: center;
+.task-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* two columns */
+  gap: 16px;
+  width: 600px;
 }
 
-.task-list input[type="checkbox"] {
-    margin-right: 10px;
+.task {
+  font-size: 20px;       /* bigger text */
+  padding: 16px;
+  border: 0px solid #333;
+  border-radius: 8px;
+  cursor: pointer;
+  background: white;
+  transition: 0.2s;
+  text-align: center;
+}
+
+.task:hover {
+  background: #f1f1f1;
+}
+
+.task.done {
+  background: #6c5ce7;
+  color: white;
 }
 
 /* Estilos dos eventos */
@@ -260,6 +281,31 @@ body {
   border-color: #6c5ce7;
   box-shadow: 0 0 6px rgba(108, 92, 231, 0.4);
 }
+
+table {
+  border-collapse: collapse;
+  margin: 40px auto;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+/* Static size for cells */
+th, td {
+  border: 1px solid #444;
+  width: 100px;   /* fixed column width */
+  height: 40px;   /* fixed row height */
+  padding: 0;     /* optional, remove padding to keep size strict */
+  overflow: hidden; /* hides text overflow */
+}
+
+/* Header style */
+th {
+  background-color: #6c5ce7;
+  color: white;
+  font-weight: bold;
+}
+
+
 
 /* Design responsivo */
 @media (max-width: 768px) {

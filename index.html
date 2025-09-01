@@ -21,13 +21,13 @@
             <li class="nav-item active" data-page="inicio">
               <a href="#">Início</a>
             </li>
-            <li class="nav-item" data-page="dados">
+            <li class="nav-item deactive" data-page="dados">
               <a href="#">Dados</a>
             </li>
-            <li class="nav-item" data-page="infos">
+            <li class="nav-item deactive" data-page="infos">
               <a href="#">Informações</a>
             </li>
-            <li class="nav-item" data-page="resultados">
+            <li class="nav-item deactive" data-page="resultados">
               <a href="#">Resultados</a>
             </li>
           </ul>
@@ -38,11 +38,10 @@
           <div class="page active" id="inicio">
             <div class="content-header">
               <h2>Início</h2>
-              <button class="btn-primary" data-page="tasks">Ver Tarefas</button>
             </div>
             <div class="card-container">
               <div class="card">
-                <h3>Bem-vindo à Sua Aplicação</h3>
+                <h3>Calculadora de Estatística</h3>
                 <p>
                   Este é um template simples para você construir em cima. Comece
                   adicionando seus componentes aqui.
@@ -51,19 +50,6 @@
                   Ver Dados
                 </button>
               </div>
-
-              <div class="card">
-                <h3>Atividade Recente</h3>
-                <p>Você tem 3 tarefas pendentes e 2 eventos próximos.</p>
-                <div class="nav-buttons">
-                  <button class="btn-secondary" data-page="tasks">
-                    Ver Tarefas
-                  </button>
-                  <button class="btn-secondary" data-page="calendar">
-                    Ver Calendário
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -71,12 +57,10 @@
           <div class="page" id="dados">
             <div class="content-header">
               <h2>Dados</h2>
-              <button class="btn-primary" data-page="settings">
-                Editar Dados
-              </button>
+              <button class="btn-secondary" data-page="inicio">Voltar</button>
             </div>
 
-            <div class="content-header">
+            <div class="content-header" style="margin-bottom: 0px">
               <div></div>
               <div class="card" style="margin-top: 20px">
                 <h3>Insira os dados</h3>
@@ -94,7 +78,16 @@
 
             <div class="content-header">
               <div></div>
-              <div class="card" style="margin-top: 20px"></div>
+              <div class="card" style="margin-top: 20px">
+                <h3>Entradas:</h3>
+                <table border="1">
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </table>
+              </div>
               <div></div>
             </div>
           </div>
@@ -103,59 +96,27 @@
           <div class="page" id="infos">
             <div class="content-header">
               <h2>Informações</h2>
-              <button class="btn-primary">Nova Informação</button>
+              <button class="btn-secondary" data-page="dados">Voltar</button>
             </div>
 
-            <div class="card-container">
-              <div class="card">
-                <h3>Tarefas Pendentes</h3>
-                <ul class="task-list">
-                  <li>
-                    <input type="checkbox" /> Completar proposta do projeto
-                  </li>
-                  <li><input type="checkbox" /> Revisar feedback do cliente</li>
-                  <li><input type="checkbox" /> Preparar agenda da reunião</li>
-                </ul>
-                <button class="btn-secondary" data-page="dashboard">
-                  Voltar ao Dashboard
-                </button>
-              </div>
-
-              <div class="card">
-                <h3>Tarefas Concluídas</h3>
-                <ul class="task-list">
-                  <li>
-                    <input type="checkbox" checked /> Pesquisar tendências de
-                    mercado
-                  </li>
-                  <li>
-                    <input type="checkbox" checked /> Atualizar documentação
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <!-- Página Calendário -->
-          <div class="page" id="calendar">
             <div class="content-header">
-              <h2>Calendário</h2>
-              <button class="btn-primary">Adicionar Evento</button>
-            </div>
-
-            <div class="card-container">
+              <div></div>
               <div class="card">
-                <h3>Próximos Eventos</h3>
-                <div class="event">
-                  <p><strong>Reunião de Equipe</strong> - Seg, 5 Jun, 10:00</p>
+                <h3>Informações Desejadas</h3>
+                <div class="task-container">
+                  <div class="task">Média</div>
+                  <div class="task">Moda</div>
+                  <div class="task">Mediana</div>
                 </div>
-                <div class="event">
-                  <p><strong>Prazo do Projeto</strong> - Sex, 9 Jun, 17:00</p>
+                <div class="content-header" style="margin-top: 20px">
+                  <p></p>
+                  <button class="btn-primary" data-page="resultados">
+                    Calcular
+                  </button>
+                  <p></p>
                 </div>
-                <button class="btn-secondary" data-page="dashboard">
-                  Voltar ao Dashboard
-                </button>
               </div>
+              <div></div>
             </div>
           </div>
 
@@ -163,26 +124,14 @@
           <div class="page" id="resultados">
             <div class="content-header">
               <h2>Resultados</h2>
-              <button class="btn-primary">Salvar Alterações</button>
+              <button class="btn-secondary" data-page="infos">Voltar</button>
             </div>
 
             <div class="card-container">
               <div class="card">
-                <h3>Configurações da Conta</h3>
-                <div class="form-group">
-                  <label for="notifications">Notificações por Email</label>
-                  <input type="checkbox" id="notifications" checked />
-                </div>
-                <div class="form-group">
-                  <label for="theme">Tema</label>
-                  <select id="theme">
-                    <option>Claro</option>
-                    <option>Escuro</option>
-                    <option>Sistema</option>
-                  </select>
-                </div>
+                <h3>Resultados</h3>
                 <button class="btn-secondary" data-page="inicio">
-                  Voltar ao Dashboard
+                  Voltar ao início
                 </button>
               </div>
             </div>
@@ -191,7 +140,7 @@
       </div>
 
       <footer class="app-footer">
-        <p></p>
+        <p>@Calc</p>
       </footer>
     </div>
 

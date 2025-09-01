@@ -87,3 +87,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Você pode adicionar mais funcionalidades JavaScript aqui conforme necessário
 });
+
+document.querySelectorAll(".task").forEach((task) => {
+  task.addEventListener("click", () => {
+    task.classList.toggle("done");
+  });
+});
