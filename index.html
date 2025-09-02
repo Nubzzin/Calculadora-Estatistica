@@ -68,13 +68,14 @@
                 <div class="centered-container">
                   <input
                     type="number"
+                    id="dataInput"
                     class="centered-input"
                     placeholder='Digite e pressione "Enter" para cada dado'
                   />
                 </div>
                 <div class="content-header" style="margin-top: 20px">
                   <p></p>
-                  <button class="btn-primary" data-page="resultados">
+                  <button class="btn-primary" data-page="infos">
                     Próxima Etapa
                   </button>
                   <p></p>
@@ -83,12 +84,12 @@
               <div></div>
             </div>
 
-            <div class="content-header">
+            <div class="content-header table-container">
               <div></div>
               <div class="card" style="margin-top: 20px">
                 <h3>Entradas:</h3>
-                <table border="1">
-                  <tr>
+                <table id="dataEntries" border="1">
+                  <tr id="row-placeholder">
                     <td></td>
                     <td></td>
                     <td></td>

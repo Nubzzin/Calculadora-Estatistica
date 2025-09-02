@@ -75,14 +75,33 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 3000);
   }
 
-  // Exemplo: Adicionar evento de clique aos cards
-  document.querySelectorAll(".card").forEach((card) => {
-    card.addEventListener("click", (e) => {
-      // Não acionar se um botão foi clicado
-      if (e.target.tagName !== "BUTTON") {
-        showNotification("Card clicado!");
+  values = [];
+  let placeholderSize = 3;
+  // Adicionar evento de clique ao botão "Próxima Etapa"
+  document.querySelector("#dataInput").addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      let rowPlaceholder = document.querySelector("#row-placeholder");
+      let inputSec = document.querySelector("#dataInput");
+      try {
+        values.push(Number(inputSec.value));
+        console.log("Array: ", values);
+        inputSec.value = "";
+      } catch (err) {
+        showNotification("Entrada inválida. Por favor, insira um número.");
       }
-    });
+      let table = document.querySelector("#dataEntries");
+      let row = table.rows[0];
+      if (placeholderSize > 0) {
+        rowPlaceholder.deleteCell(rowPlaceholder.cells.length - 1);
+        placeholderSize--;
+      }
+      let cell = row.insertCell(0);
+      if (values.length % 3 == 0) {
+        console.log(values.length);
+        row = table.insertRow(0);
+      }
+      cell.textContent = values[values.length - 1];
+    }
   });
 });
 
