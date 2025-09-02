@@ -97,6 +97,7 @@ body::-webkit-scrollbar {
 }
 
 .nav-item.deactive {
+    pointer-events: none;
     background-color: #c8c9ce;
 }
 

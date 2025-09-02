@@ -23,6 +23,14 @@ function changePage(pageId) {
     .querySelector(`.nav-item[data-page="${pageId}"]`)
     .classList.add("active");
 
+  document
+    .querySelector(`.nav-item[data-page="${pageId}"]`)
+    .classList.add("active");
+
+  document
+    .querySelector(`.nav-item[data-page="${pageId}"]`)
+    .classList.remove("deactive");
+
   // Fechar menu mobile se estiver aberto
   const sidebar = document.getElementById("sidebar");
   if (sidebar.classList.contains("active")) {
@@ -32,6 +40,7 @@ function changePage(pageId) {
 
 // Configurar event listeners quando o DOM estiver carregado
 document.addEventListener("DOMContentLoaded", function () {
+  values = [];
   // Adicionar eventos de clique aos itens de navegação
   document.querySelectorAll(".nav-item").forEach((item) => {
     item.addEventListener("click", function () {
@@ -44,7 +53,15 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll("button[data-page]").forEach((button) => {
     button.addEventListener("click", function () {
       const pageId = this.getAttribute("data-page");
-      changePage(pageId);
+      if (pageId !== "infos") {
+        changePage(pageId);
+      } else {
+        if (values.length > 0) {
+          changePage(pageId);
+        } else {
+          showNotification("Você não digitou nenhum valor.");
+        }
+      }
     });
   });
 
@@ -55,16 +72,17 @@ document.addEventListener("DOMContentLoaded", function () {
     notification.className = "notification";
     notification.textContent = message;
     notification.style.cssText = `
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #2c3e50;
-            color: white;
-            padding: 1rem;
-            border-radius: 4px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            z-index: 1000;
-        `;
+    position: fixed;
+    bottom: 80px; /* raised a little higher than 20px */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #2c3e50;
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+`;
 
     // Adicionar à página
     document.body.appendChild(notification);
@@ -75,7 +93,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 3000);
   }
 
-  values = [];
   let placeholderSize = 3;
   // Adicionar evento de clique ao botão "Próxima Etapa"
   document.querySelector("#dataInput").addEventListener("keypress", (e) => {
