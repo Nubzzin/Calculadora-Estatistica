@@ -18,13 +18,13 @@ export function moda(valores) {
   valores.forEach((x) => {
     mapa[x] = (mapa[x] || 0) + 1;
   });
-  for (let [_, value] of Object.entries(mapa)) {
-    if (value > modas[1]) {
-      modas[1] = value;
+  for (let key in mapa) {
+    if (mapa[key] > modas[1]) {
+      modas[1] = mapa[key];
     }
   }
-  for (let [key, value] of Object.entries(mapa)) {
-    if (value === modas[1]) {
+  for (let key in mapa) {
+    if (mapa[key] === modas[1]) {
       modas[0].push(key);
     }
   }
