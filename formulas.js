@@ -33,4 +33,6 @@ export function moda(valores) {
 
 // Testes
 let valores = [1, 1, 2, 3, 4, 4, 4];
-console.log(moda(valores));
+console.log("Média:", media(valores));
+console.log("Mediana:", mediana(valores));
+console.log("Moda:", moda(valores));
