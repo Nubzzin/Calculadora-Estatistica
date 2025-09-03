@@ -1,8 +1,36 @@
+import * as formulas from "./formulas";
+
+let values = [];
+let informacoes = [];
+let placeholderSize = 3;
+let t = 0;
+
 // Alternar menu mobile
 document.getElementById("menuToggle").addEventListener("click", function () {
   const sidebar = document.getElementById("sidebar");
   sidebar.classList.toggle("active");
 });
+
+function reiniciar() {
+  document.querySelectorAll(`.nav-item`).forEach((item) => {
+    if (item.getAttribute("data-page") !== "inicio") {
+      item.classList.remove("active");
+      item.classList.add("deactive");
+    }
+  });
+  document.querySelectorAll(".task").forEach((task) => {
+    task.classList.remove("done");
+  });
+  document.querySelector("table").innerHTML =
+    '<tr id="row-placeholder"><td></td><td></td><td></td></tr>';
+  values = [];
+  informacoes = [];
+  placeholderSize = 3;
+  t = 0;
+  console.log(values);
+  console.log(informacoes);
+  changePage("inicio");
+}
 
 // Função para mudar páginas
 function changePage(pageId) {
@@ -40,7 +68,6 @@ function changePage(pageId) {
 
 // Configurar event listeners quando o DOM estiver carregado
 document.addEventListener("DOMContentLoaded", function () {
-  values = [];
   // Adicionar eventos de clique aos itens de navegação
   document.querySelectorAll(".nav-item").forEach((item) => {
     item.addEventListener("click", function () {
@@ -53,14 +80,22 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll("button[data-page]").forEach((button) => {
     button.addEventListener("click", function () {
       const pageId = this.getAttribute("data-page");
-      if (pageId !== "infos") {
-        changePage(pageId);
-      } else {
+      if (pageId === "infos") {
         if (values.length > 0) {
           changePage(pageId);
         } else {
           showNotification("Você não digitou nenhum valor.");
         }
+      } else if (pageId === "resultados") {
+        if (informacoes.length > 0) {
+          changePage(pageId);
+        } else {
+          showNotification("Você não selecionou nada.");
+        }
+      } else if (pageId === "inicio") {
+        reiniciar();
+      } else {
+        changePage(pageId);
       }
     });
   });
@@ -93,7 +128,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 3000);
   }
 
-  let placeholderSize = 3;
   // Adicionar evento de clique ao botão "Próxima Etapa"
   document.querySelector("#dataInput").addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
@@ -109,15 +143,28 @@ document.addEventListener("DOMContentLoaded", function () {
       let table = document.querySelector("#dataEntries");
       let row = table.rows[0];
       if (placeholderSize > 0) {
-        rowPlaceholder.deleteCell(rowPlaceholder.cells.length - 1);
+        rowPlaceholder.deleteCell(t);
         placeholderSize--;
       }
-      let cell = row.insertCell(0);
+      let cell = row.insertCell(t);
+      t++;
       if (values.length % 3 == 0) {
-        console.log(values.length);
         row = table.insertRow(0);
+        t = 0;
       }
       cell.textContent = values[values.length - 1];
     }
+  });
+});
+
+document.querySelectorAll(".task").forEach((task) => {
+  task.addEventListener("click", () => {
+    if (!informacoes.find((info) => info === task.textContent)) {
+      informacoes.push(task.textContent);
+    } else {
+      informacoes = informacoes.filter((info) => info !== task.textContent);
+    }
+    console.log(informacoes);
+    task.classList.toggle("done");
   });
 });
