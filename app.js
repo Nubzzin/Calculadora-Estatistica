@@ -1,5 +1,3 @@
-// import * as formulas from "./formulas";
-
 let values = [];
 let informacoes = [];
 let placeholderSize = 3;
@@ -107,17 +105,17 @@ document.addEventListener("DOMContentLoaded", function () {
     notification.className = "notification";
     notification.textContent = message;
     notification.style.cssText = `
-    position: fixed;
-    bottom: 80px; /* raised a little higher than 20px */
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #2c3e50;
-    color: white;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    z-index: 1000;
-`;
+      position: fixed;
+      bottom: 80px; /* raised a little higher than 20px */
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #2c3e50;
+      color: white;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      z-index: 1000;
+    `;
 
     // Adicionar à página
     document.body.appendChild(notification);

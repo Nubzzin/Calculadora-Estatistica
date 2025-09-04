@@ -1,8 +1,8 @@
-export function media(valores) {
+function media(valores) {
   return valores.reduce((soma, atual) => (soma += atual), 0) / valores.length;
 }
 
-export function mediana(valores) {
+function mediana(valores) {
   valores.sort((a, b) => a - b);
   if (valores.length % 2 == 0) {
     return (valores[valores.length / 2 - 1] + valores[valores.length / 2]) / 2;
@@ -11,7 +11,7 @@ export function mediana(valores) {
   }
 }
 
-export function moda(valores) {
+function moda(valores) {
   let mapa = {};
   let modas = [[], 0];
 
@@ -31,7 +31,7 @@ export function moda(valores) {
   return modas;
 }
 
-export function agrupamentoDiscreto(valores) {
+function agrupamentoDiscreto(valores) {
   let mapa = {};
   let fi = 0;
   valores.forEach((x) => {
@@ -48,7 +48,7 @@ export function agrupamentoDiscreto(valores) {
   return [soma, soma[1] / fi];
 }
 
-export function variancia(valores) {
+function variancia(valores) {
   let mapa = {};
   let fi = 0;
   let ad = agrupamentoDiscreto(valores)[1];
@@ -67,11 +67,11 @@ export function variancia(valores) {
   return Number((resultado / fi).toFixed(2));
 }
 
-export function desvioPadrao(variancia) {
+function desvioPadrao(variancia) {
   return Math.sqrt(variancia);
 }
 
-export function coeficienteVariacao(desvioPadrao, agrupamentoDiscreto) {
+function coeficienteVariacao(desvioPadrao, agrupamentoDiscreto) {
   return (100 * desvioPadrao) / agrupamentoDiscreto[1];
 }
 
