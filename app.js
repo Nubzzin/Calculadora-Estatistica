@@ -1,4 +1,4 @@
-import * as formulas from "./formulas";
+// import * as formulas from "./formulas";
 
 let values = [];
 let informacoes = [];
