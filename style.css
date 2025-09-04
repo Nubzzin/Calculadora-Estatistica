@@ -10,19 +10,24 @@ body {
     line-height: 1.6;
     color: #333;
     background-color: #f5f5f5;
-  margin: 0;
-  padding: 0;
-  overflow-y: scroll;  /* keep scroll functionality */
-  
-  /* Hide scrollbar */
-  scrollbar-width: none;       /* Firefox */
-  -ms-overflow-style: none;    /* IE/Edge */
+    margin: 0;
+    padding: 0;
+    overflow-y: scroll;
+    /* keep scroll functionality */
+
+    /* Hide scrollbar */
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE/Edge */
 }
 
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
+    display: none;
+    /* Chrome, Safari */
 }
+
 .app-container {
     display: flex;
     flex-direction: column;
@@ -34,7 +39,7 @@ body::-webkit-scrollbar {
     background-color: #2c3e50;
     color: white;
     padding: 1rem 0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .header-content {
@@ -74,7 +79,7 @@ body::-webkit-scrollbar {
     width: 250px;
     background-color: white;
     padding: 1.5rem 0;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
 }
 
 .nav-menu {
@@ -138,8 +143,13 @@ body::-webkit-scrollbar {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 /* Estilos dos botões */
@@ -191,7 +201,7 @@ body::-webkit-scrollbar {
     background-color: white;
     border-radius: 8px;
     padding: 1.5rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .card h3 {
@@ -200,36 +210,38 @@ body::-webkit-scrollbar {
 }
 
 .task-body {
-  font-family: Arial, sans-serif;
-  justify-content: center;
-  align-items: center;
+    font-family: Arial, sans-serif;
+    justify-content: center;
+    align-items: center;
 }
 
 .task-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* two columns */
-  gap: 16px;
-  width: 600px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* two columns */
+    gap: 16px;
+    width: 600px;
 }
 
 .task {
-  font-size: 20px;       /* bigger text */
-  padding: 16px;
-  border: 0px solid #333;
-  border-radius: 8px;
-  cursor: pointer;
-  background: white;
-  transition: 0.2s;
-  text-align: center;
+    font-size: 20px;
+    /* bigger text */
+    padding: 16px;
+    border: 0px solid #333;
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    transition: 0.2s;
+    text-align: center;
 }
 
 .task:hover {
-  background: #f1f1f1;
+    background: #f1f1f1;
 }
 
 .task.done {
-  background: #6c5ce7;
-  color: white;
+    background: #6c5ce7;
+    color: white;
 }
 
 /* Estilos dos eventos */
@@ -274,49 +286,54 @@ body::-webkit-scrollbar {
 
 /* Central container */
 .centered-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 /* Input style */
 .centered-input {
-  width: 350px;
-  padding: 12px 16px;
-  font-size: 1rem;
-  border: 2px solid #dfe6e9;
-  border-radius: 8px;
-  outline: none;
-  transition: border 0.2s, box-shadow 0.2s;
+    width: 350px;
+    padding: 12px 16px;
+    font-size: 1rem;
+    border: 2px solid #dfe6e9;
+    border-radius: 8px;
+    outline: none;
+    transition: border 0.2s, box-shadow 0.2s;
 }
 
 .centered-input:focus {
-  border-color: #6c5ce7;
-  box-shadow: 0 0 6px rgba(108, 92, 231, 0.4);
+    border-color: #6c5ce7;
+    box-shadow: 0 0 6px rgba(108, 92, 231, 0.4);
 }
 
 table {
-  border-collapse: collapse;
-  margin: 40px auto;
-  text-align: center;
-  font-family: Arial, sans-serif;
+    border-collapse: collapse;
+    margin: 40px auto;
+    text-align: center;
+    font-family: Arial, sans-serif;
 }
 
 /* Static size for cells */
-th, td {
-  border: 1px solid #444;
-  width: 100px;   /* fixed column width */
-  height: 40px;   /* fixed row height */
-  padding: 0;     /* optional, remove padding to keep size strict */
-  overflow: hidden; /* hides text overflow */
+th,
+td {
+    border: 1px solid #444;
+    width: 100px;
+    /* fixed column width */
+    height: 40px;
+    /* fixed row height */
+    padding: 0;
+    /* optional, remove padding to keep size strict */
+    overflow: hidden;
+    /* hides text overflow */
 }
 
 /* Header style */
 th {
-  background-color: #6c5ce7;
-  color: white;
-  font-weight: bold;
+    background-color: #6c5ce7;
+    color: white;
+    font-weight: bold;
 }
 
 
@@ -326,31 +343,74 @@ th {
     .menu-toggle {
         display: block;
     }
-    
+
     .main-container {
         flex-direction: column;
     }
-    
+
     .sidebar {
         width: 100%;
         display: none;
     }
-    
+
     .sidebar.active {
         display: block;
     }
-    
+
     .card-container {
         grid-template-columns: 1fr;
     }
-    
+
     .content-header {
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
     }
-    
+
     .nav-buttons {
         flex-direction: column;
     }
+}
+
+.blue-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+.blue-table th,
+.blue-table td {
+    border: 1px solid #d0e2ff;
+    padding: 12px 16px;
+    text-align: center;
+}
+
+.blue-table th {
+    background-color: #1e90ff;
+    color: white;
+    font-weight: bold;
+}
+
+.blue-table tr:nth-last-child(even) {
+    background-color: #f0f8ff;
+    /* light blue */
+}
+
+.blue-table tr:nth-last-child(odd) {
+    background-color: white;
+    /* default */
+}
+
+
+.blue-table tr:hover {
+    background-color: #d6eaff;
+    transition: 0.2s;
+}
+
+td {
+    height: 55px;
+    /* fixed minimum row height */
 }
