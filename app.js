@@ -64,12 +64,13 @@ function changePage(pageId) {
   }
 }
 
+let pageId = "";
 // Configurar event listeners quando o DOM estiver carregado
 document.addEventListener("DOMContentLoaded", function () {
   // Adicionar eventos de clique aos itens de navegação
   document.querySelectorAll(".nav-item").forEach((item) => {
     item.addEventListener("click", function () {
-      const pageId = this.getAttribute("data-page");
+      pageId = this.getAttribute("data-page");
       changePage(pageId);
     });
   });
@@ -77,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Adicionar eventos de clique aos botões com atributo data-page
   document.querySelectorAll("button[data-page]").forEach((button) => {
     button.addEventListener("click", function () {
-      const pageId = this.getAttribute("data-page");
+      pageId = this.getAttribute("data-page");
       if (pageId === "infos") {
         if (values.length > 0) {
           changePage(pageId);
@@ -126,15 +127,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 3000);
   }
 
-  // Adicionar evento de clique ao botão "Próxima Etapa"
-  document.querySelector("#dataInput").addEventListener("keypress", (e) => {
+  let inputTabela = document.querySelector("#dataInput");
+  inputTabela.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
       let rowPlaceholder = document.querySelector("#row-placeholder");
-      let inputSec = document.querySelector("#dataInput");
       try {
-        values.push(Number(inputSec.value));
+        values.push(Number(inputTabela.value));
         console.log("Array: ", values);
-        inputSec.value = "";
+        inputTabela.value = "";
       } catch (err) {
         showNotification("Entrada inválida. Por favor, insira um número.");
       }
@@ -151,6 +151,13 @@ document.addEventListener("DOMContentLoaded", function () {
         t = 0;
       }
       cell.textContent = values[values.length - 1];
+    }
+  });
+
+  let inputFi = document.querySelector("#dataInputFi");
+  inputFi.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      console.log(inputFi.value);
     }
   });
 });

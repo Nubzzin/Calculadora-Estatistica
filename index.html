@@ -54,6 +54,7 @@
           </div>
 
           <!-- Página Dados -->
+          <!-- Tabela -->
           <div class="page" id="dados">
             <div class="content-header">
               <h2>Dados</h2>
@@ -64,6 +65,13 @@
               <div></div>
               <div class="card" style="margin-top: 20px">
                 <h3>Insira os dados</h3>
+                <button class="btn-secondary mini-button" data-page="dados">
+                  Tabela
+                </button>
+                <button class="btn-secondary" data-page="fi">Fi</button>
+                <button class="btn-secondary" data-page="classes">
+                  Classes
+                </button>
                 <p>Garanta que precionou "Enter" após cada dado.</p>
                 <div class="centered-container">
                   <input
@@ -91,6 +99,63 @@
                 <table id="dataEntries" border="1" class="blue-table">
                   <tr id="row-placeholder">
                     <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </table>
+              </div>
+              <div></div>
+            </div>
+          </div>
+
+          <!-- Fi -->
+          <div class="page" id="fi">
+            <div class="content-header">
+              <h2>Dados</h2>
+              <button class="btn-secondary" data-page="inicio">Voltar</button>
+            </div>
+
+            <div class="content-header" style="margin-bottom: 0px">
+              <div></div>
+              <div class="card" style="margin-top: 20px">
+                <h3>Insira os dados</h3>
+                <button class="btn-secondary" data-page="dados">Tabela</button>
+                <button class="btn-secondary mini-button" data-page="fi">
+                  Fi
+                </button>
+                <button class="btn-secondary" data-page="classes">
+                  Classes
+                </button>
+                <p>Garanta que precionou "Enter" após cada dado.</p>
+                <div class="centered-container">
+                  <input
+                    type="number"
+                    id="dataInputFi"
+                    class="centered-input"
+                    placeholder="Digite um número"
+                  />
+                </div>
+                <div class="content-header" style="margin-top: 20px">
+                  <p></p>
+                  <button class="btn-primary" data-page="infos">
+                    Próxima Etapa
+                  </button>
+                  <p></p>
+                </div>
+              </div>
+              <div></div>
+            </div>
+
+            <div class="content-header table-container">
+              <div></div>
+              <div class="card" style="margin-top: 20px">
+                <h3>Entradas:</h3>
+                <table id="dataEntries" border="1" class="blue-table">
+                  <tr>
+                    <th>Xi</th>
+                    <th>Fi</th>
+                  </tr>
+                  <tr>
                     <td></td>
                     <td></td>
                   </tr>

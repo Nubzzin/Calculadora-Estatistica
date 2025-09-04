@@ -414,3 +414,11 @@ td {
     height: 55px;
     /* fixed minimum row height */
 }
+
+.mini-button {
+    background-color: #3498db;
+    color: white;
+    font-weight: 800;
+    margin-bottom: 10px;
+    margin-top: 0px;
+}
