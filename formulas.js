@@ -18,9 +18,11 @@ function moda(valores) {
   valores.forEach((x) => {
     mapa[x] = (mapa[x] || 0) + 1;
   });
-  for (let key in mapa) {
-    if (mapa[key] > modas[1]) {
-      modas[1] = mapa[key];
+  if (moda[1] > 1) {
+    for (let key in mapa) {
+      if (mapa[key] > modas[1]) {
+        modas[1] = mapa[key];
+      }
     }
   }
   for (let key in mapa) {
@@ -76,17 +78,17 @@ function coeficienteVariacao(desvioPadrao, agrupamentoDiscreto) {
 }
 
 // Testes
-let valores = [1, 1, 2, 3, 4, 4];
-console.log("Média:", media(valores));
-console.log("Mediana:", mediana(valores));
-console.log("Moda:", moda(valores));
-console.log("Agrupamento Discreto:", agrupamentoDiscreto(valores));
-console.log("Variancia:", variancia(valores));
-console.log("Desvio Padrao:", desvioPadrao(variancia(valores)));
-console.log(
-  "Coeficiente de Variacao:",
-  coeficienteVariacao(
-    desvioPadrao(variancia(valores)),
-    agrupamentoDiscreto(valores),
-  ),
-);
+// let valores = [1, 1, 2, 3, 4, 4];
+// console.log("Média:", media(valores));
+// console.log("Mediana:", mediana(valores));
+// console.log("Moda:", moda(valores));
+// console.log("Agrupamento Discreto:", agrupamentoDiscreto(valores));
+// console.log("Variancia:", variancia(valores));
+// console.log("Desvio Padrao:", desvioPadrao(variancia(valores)));
+// console.log(
+//   "Coeficiente de Variacao:",
+//   coeficienteVariacao(
+//     desvioPadrao(variancia(valores)),
+//     agrupamentoDiscreto(valores),
+//   ),
+// );

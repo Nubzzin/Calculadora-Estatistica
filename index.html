@@ -16,12 +16,12 @@
       </header>
 
       <div class="main-container">
-        <nav class="sidebar" id="sidebar">
+        <!-- <nav class="sidebar" id="sidebar">
           <ul class="nav-menu">
             <li class="nav-item active" data-page="inicio">
               <a href="#">Início</a>
             </li>
-            <li class="nav-item deactive" data-page="dados">
+            <li class="nav-item active" data-page="dados">
               <a href="#">Dados</a>
             </li>
             <li class="nav-item deactive" data-page="infos">
@@ -31,11 +31,11 @@
               <a href="#">Resultados</a>
             </li>
           </ul>
-        </nav>
+        </nav> -->
 
         <main class="content-area">
           <!-- Página Início -->
-          <div class="page active" id="inicio">
+          <div class="page" id="inicio">
             <div class="content-header">
               <h2>Início</h2>
             </div>
@@ -55,117 +55,176 @@
 
           <!-- Página Dados -->
           <!-- Tabela -->
-          <div class="page" id="dados">
+          <div class="page active" id="dados">
             <div class="content-header">
-              <h2>Dados</h2>
-              <button class="btn-secondary" data-page="inicio">Voltar</button>
+              <!-- <h2>Dados</h2> -->
+              <!-- <button class="btn-secondary" data-page="inicio">Voltar</button> -->
             </div>
 
-            <div class="content-header" style="margin-bottom: 0px">
-              <div></div>
-              <div class="card" style="margin-top: 20px">
-                <h3>Insira os dados</h3>
-                <button class="btn-secondary mini-button" data-page="dados">
-                  Tabela
-                </button>
-                <button class="btn-secondary" data-page="fi">Fi</button>
-                <button class="btn-secondary" data-page="classes">
-                  Classes
-                </button>
-                <p>Garanta que precionou "Enter" após cada dado.</p>
-                <div class="centered-container">
-                  <input
-                    type="number"
-                    id="dataInput"
-                    class="centered-input"
-                    placeholder="Digite um número"
-                  />
+            <div class="cards-row">
+              <div class="left-column">
+                <div class="card">
+                  <h3>Opções de Entrada</h3>
+                  <div class="mode-buttons">
+                    <button class="btn-secondary mini-button" data-page="dados">
+                      Tabela
+                    </button>
+                    <button class="btn-secondary" data-page="fi">Fi</button>
+                    <button class="btn-secondary" data-page="classes">
+                      Classes
+                    </button>
+                  </div>
+                  <h3>Entrada</h3>
+                  <p>Garanta que pressionou "Enter" após cada dado.</p>
+                  <div class="centered-container">
+                    <input
+                      type="number"
+                      id="dataInput"
+                      class="centered-input"
+                      placeholder="Digite um número"
+                    />
+                  </div>
                 </div>
-                <div class="content-header" style="margin-top: 20px">
-                  <p></p>
-                  <button class="btn-primary" data-page="infos">
-                    Próxima Etapa
-                  </button>
-                  <p></p>
-                </div>
-              </div>
-              <div></div>
-            </div>
 
-            <div class="content-header table-container">
-              <div></div>
-              <div class="card" style="margin-top: 20px">
-                <h3>Entradas:</h3>
-                <table id="dataEntries" border="1" class="blue-table">
-                  <tr id="row-placeholder">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                </table>
+                <div class="card bottom">
+                  <h3>Opções de Cálculo</h3>
+                  <div class="task-container">
+                    <div class="task" data="media">Media</div>
+                    <div class="task" data="moda">Moda/Czuber</div>
+                    <div class="task" data="mediana">Mediana</div>
+                    <div class="task" data="variancia">Variancia</div>
+                    <div class="task" data="coeficiente">
+                      Coeficiencia de Variacao
+                    </div>
+                    <div class="task" data="agrupamento">
+                      Agrupamento Discreto
+                    </div>
+                    <div class="task" data="desvio">Desvio Padrao</div>
+                  </div>
+                  <div class="action-buttons">
+                    <button
+                      class="btn-primary"
+                      data-page="resultados"
+                      style="margin-top: 20px"
+                    >
+                      Calcular
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div></div>
+
+              <div class="right-column">
+                <div class="card right">
+                  <h3>Entradas:</h3>
+                  <table
+                    id="dataEntries"
+                    border="1"
+                    class="blue-table"
+                    style="margin-top: 30px"
+                  >
+                    <tr id="row-placeholder">
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
 
           <!-- Fi -->
           <div class="page" id="fi">
             <div class="content-header">
-              <h2>Dados</h2>
-              <button class="btn-secondary" data-page="inicio">Voltar</button>
+              <!-- <h2>Dados</h2>
+              <button class="btn-secondary" data-page="inicio">Voltar</button> -->
             </div>
 
-            <div class="content-header" style="margin-bottom: 0px">
-              <div></div>
-              <div class="card" style="margin-top: 20px">
-                <h3>Insira os dados</h3>
-                <button class="btn-secondary" data-page="dados">Tabela</button>
-                <button class="btn-secondary mini-button" data-page="fi">
-                  Fi
-                </button>
-                <button class="btn-secondary" data-page="classes">
-                  Classes
-                </button>
-                <p>Garanta que precionou "Enter" após cada dado.</p>
-                <div class="centered-container">
-                  <input
-                    type="number"
-                    id="dataInputFi"
-                    class="centered-input"
-                    placeholder="Digite um número"
-                  />
+            <div class="cards-row">
+              <div class="left-column">
+                <div class="card">
+                  <h3>Opções de Entrada</h3>
+                  <div class="mode-buttons">
+                    <button class="btn-secondary" data-page="dados">
+                      Tabela
+                    </button>
+                    <button class="btn-secondary mini-button" data-page="fi">
+                      Fi
+                    </button>
+                    <button class="btn-secondary" data-page="classes">
+                      Classes
+                    </button>
+                    <button
+                      id="nova-linha"
+                      class="btn-secondary"
+                      style="
+                        background-color: #4cc95b;
+                        color: white;
+                        font-weight: 800;
+                        margin-top: 50px;
+                      "
+                    >
+                      Nova Linha +
+                    </button>
+                  </div>
                 </div>
-                <div class="content-header" style="margin-top: 20px">
-                  <p></p>
-                  <button class="btn-primary" data-page="infos">
-                    Próxima Etapa
-                  </button>
-                  <p></p>
-                </div>
-              </div>
-              <div></div>
-            </div>
 
-            <div class="content-header table-container">
-              <div></div>
-              <div class="card" style="margin-top: 20px">
-                <h3>Entradas:</h3>
-                <table id="dataEntries" border="1" class="blue-table">
-                  <tr>
-                    <th>Xi</th>
-                    <th>Fi</th>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                </table>
+                <div class="card bottom">
+                  <h3>Opções de Cálculo</h3>
+                  <div class="task-container">
+                    <div class="task">Media</div>
+                    <div class="task">Moda/Czuber</div>
+                    <div class="task">Mediana</div>
+                    <div class="task">Variancia</div>
+                    <div class="task">Coeficiencia de Variacao</div>
+                    <div class="task">Agrupamento Discreto</div>
+                    <div class="task">Desvio Padrao</div>
+                  </div>
+                  <div class="action-buttons">
+                    <button
+                      class="btn-primary"
+                      data-page="resultados"
+                      style="margin-top: 20px"
+                    >
+                      Calcular
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div></div>
+
+              <div class="right-column">
+                <div class="card right">
+                  <h3>Entradas:</h3>
+                  <div class="centered-container">
+                    <table id="dataEntriesFi" border="1" class="blue-table">
+                      <tr>
+                        <th>Xi</th>
+                        <th>Fi</th>
+                      </tr>
+                      <tr>
+                        <td>
+                          <input
+                            type="number"
+                            class="centered-input fi-input"
+                            data="0"
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="number"
+                            class="centered-input fi-input"
+                            data="1"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <!-- Página Informações -->
+          <!-- Página Informações
           <div class="page" id="infos">
             <div class="content-header">
               <h2>Informações</h2>
@@ -191,7 +250,7 @@
               </div>
               <div></div>
             </div>
-          </div>
+          </div> -->
 
           <!-- Página Resultados -->
           <div class="page" id="resultados">

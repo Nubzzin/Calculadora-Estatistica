@@ -2,6 +2,8 @@ let values = [];
 let informacoes = [];
 let placeholderSize = 3;
 let t = 0;
+let pageId = "";
+let tablePosition = 2;
 
 // Alternar menu mobile
 document.getElementById("menuToggle").addEventListener("click", function () {
@@ -9,18 +11,46 @@ document.getElementById("menuToggle").addEventListener("click", function () {
   sidebar.classList.toggle("active");
 });
 
-function reiniciar() {
-  document.querySelectorAll(`.nav-item`).forEach((item) => {
-    if (item.getAttribute("data-page") !== "inicio") {
-      item.classList.remove("active");
-      item.classList.add("deactive");
-    }
+function novaLinha() {
+  let table = document.querySelector("#dataEntriesFi");
+  let row = table.insertRow();
+  let cell = row.insertCell();
+  cell.innerHTML = `<input type="number" class="centered-input fi-input" data="${tablePosition}">`;
+  tablePosition++;
+  cell = row.insertCell();
+  cell.innerHTML = `<input type="number" class="centered-input fi-input" data="${tablePosition}">`;
+  tablePosition++;
+
+  document.querySelectorAll("input[data]").forEach((inputField) => {
+    inputField.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        let table = document.querySelector("#dataEntriesFi");
+        if (Number(inputField.value) === 0) {
+          inputField.value = 0;
+        }
+        console.log(
+          inputField.getAttribute("data"),
+          " - ",
+          Number(inputField.value),
+        );
+      }
+    });
   });
+}
+
+function reiniciarTasks() {
   document.querySelectorAll(".task").forEach((task) => {
     task.classList.remove("done");
   });
-  document.querySelector("table").innerHTML =
+}
+
+function reiniciar() {
+  reiniciarTasks();
+  document.querySelector("#dataEntries").innerHTML =
     '<tr id="row-placeholder"><td></td><td></td><td></td></tr>';
+  document.querySelector(
+    "#dataEntriesFi",
+  ).innerHTML = `<tr> <th>Xi</th> <th>Fi</th> </tr> <tr> <td> <input type="number" class="centered-input fi-input" data="0" /> </td> <td> <input type="number" class="centered-input fi-input" data="1" /> </td> </tr>`;
   values = [];
   informacoes = [];
   placeholderSize = 3;
@@ -28,6 +58,13 @@ function reiniciar() {
   console.log(values);
   console.log(informacoes);
   changePage("inicio");
+}
+
+function mudarComponente(componenteId) {
+  document.querySelectorAll(".component").forEach((component) => {
+    component.classList.remove("active");
+  });
+  document.getElementById(componenteId).classList.add("active");
 }
 
 // Função para mudar páginas
@@ -64,7 +101,6 @@ function changePage(pageId) {
   }
 }
 
-let pageId = "";
 // Configurar event listeners quando o DOM estiver carregado
 document.addEventListener("DOMContentLoaded", function () {
   // Adicionar eventos de clique aos itens de navegação
@@ -79,19 +115,15 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll("button[data-page]").forEach((button) => {
     button.addEventListener("click", function () {
       pageId = this.getAttribute("data-page");
-      if (pageId === "infos") {
-        if (values.length > 0) {
+      if (pageId === "resultados") {
+        if (informacoes.length > 0 && values.length > 0) {
           changePage(pageId);
-        } else {
-          showNotification("Você não digitou nenhum valor.");
-        }
-      } else if (pageId === "resultados") {
-        if (informacoes.length > 0) {
-          changePage(pageId);
+        } else if (values.length === 0) {
+          showNotification("Você não digitou nenhum dado.");
         } else {
           showNotification("Você não selecionou nada.");
         }
-      } else if (pageId === "inicio") {
+      } else if (pageId === "resultados") {
         reiniciar();
       } else {
         changePage(pageId);
@@ -108,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
     notification.style.cssText = `
       position: fixed;
       bottom: 80px; /* raised a little higher than 20px */
-      left: 50%;
+      left: 60%;
       transform: translateX(-50%);
       background-color: #2c3e50;
       color: white;
@@ -153,21 +185,34 @@ document.addEventListener("DOMContentLoaded", function () {
       cell.textContent = values[values.length - 1];
     }
   });
-
-  let inputFi = document.querySelector("#dataInputFi");
-  inputFi.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") {
-      console.log(inputFi.value);
-    }
+  document.querySelectorAll("input[data]").forEach((inputField) => {
+    inputField.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        let table = document.querySelector("#dataEntriesFi");
+        if (Number(inputField.value) === 0) {
+          inputField.value = 0;
+        }
+        console.log(
+          inputField.getAttribute("data"),
+          " - ",
+          Number(inputField.value),
+        );
+      }
+    });
   });
+});
+
+document.querySelector("#nova-linha").addEventListener("click", () => {
+  novaLinha();
 });
 
 document.querySelectorAll(".task").forEach((task) => {
   task.addEventListener("click", () => {
-    if (!informacoes.find((info) => info === task.textContent)) {
-      informacoes.push(task.textContent);
+    let data = task.getAttribute("data");
+    if (!informacoes.find((info) => info === data)) {
+      informacoes.push(data);
     } else {
-      informacoes = informacoes.filter((info) => info !== task.textContent);
+      informacoes = informacoes.filter((info) => info !== data);
     }
     console.log(informacoes);
     task.classList.toggle("done");

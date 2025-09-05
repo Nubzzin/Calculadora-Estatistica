@@ -139,7 +139,7 @@ body::-webkit-scrollbar {
 
 .page.active {
     display: block;
-    animation: fadeIn 0.3s ease;
+    /* animation: fadeIn 0.3s ease; */
 }
 
 @keyframes fadeIn {
@@ -202,6 +202,16 @@ body::-webkit-scrollbar {
     border-radius: 8px;
     padding: 1.5rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    min-width: 400px;
+    min-height: 348px;
+    overflow-y: auto;
+}
+
+.card.right {
+    min-height: 200px;
+}
+.card.bottom {
+    min-height: 355px;
 }
 
 .card h3 {
@@ -218,15 +228,12 @@ body::-webkit-scrollbar {
 .task-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    /* two columns */
     gap: 16px;
-    width: 600px;
 }
 
 .task {
-    font-size: 20px;
-    /* bigger text */
-    padding: 16px;
+    font-size: 16px;
+    padding: 8px;
     border: 0px solid #333;
     border-radius: 8px;
     cursor: pointer;
@@ -310,7 +317,7 @@ body::-webkit-scrollbar {
 
 table {
     border-collapse: collapse;
-    margin: 40px auto;
+    /* margin: 40px auto; */
     text-align: center;
     font-family: Arial, sans-serif;
 }
@@ -412,13 +419,65 @@ th {
 
 td {
     height: 55px;
-    /* fixed minimum row height */
 }
 
 .mini-button {
     background-color: #3498db;
     color: white;
     font-weight: 800;
-    margin-bottom: 10px;
-    margin-top: 0px;
+}
+
+.centered-input.fi-input {
+    width: 120px;
+    display: inline;
+
+}
+.cards-row {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.mode-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.next-step {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.card-options {
+  flex: 0 0 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 100px;
+}
+
+.mode-buttons,
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 0 0 250px;
+}
+
+.right-column {
+  flex: 1;
+}
+
+.left-column .card,
+.right-column .card {
+  width: 100%;
 }
