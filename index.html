@@ -99,7 +99,12 @@
                       type="text"
                       placeholder="Tipo de unidade (Cm | Kg | ...):"
                       class="centered-input"
-                      style="display: inline; margin-bottom: 10px; width: 150px"
+                      style="
+                        display: inline;
+                        margin-bottom: 10px;
+                        width: 150px;
+                        height: 35px;
+                      "
                     />
                   </div>
                   <div class="task-container">
@@ -136,6 +141,9 @@
                     class="blue-table"
                     style="margin-top: 30px"
                   >
+                    <tr>
+                      <th colspan="3" class="unidade-texto">Unidade</th>
+                    </tr>
                     <tr id="row-placeholder">
                       <td></td>
                       <td></td>
@@ -144,9 +152,14 @@
                   </table>
                 </div>
                 <div class="fi component">
-                  <table id="dataEntriesFi" border="1" class="blue-table">
+                  <table
+                    id="dataEntriesFi"
+                    border="1"
+                    class="blue-table"
+                    style="margin-top: 30px"
+                  >
                     <tr>
-                      <th id="fi-xi">Xi</th>
+                      <th class="unidade-texto">Unidade</th>
                       <th>Fi</th>
                     </tr>
                     <tr>
@@ -171,7 +184,15 @@
                   </table>
                 </div>
                 <div class="classes component">
-                  <table id="dataEntriesClasses" border="1" class="blue-table">
+                  <table
+                    id="dataEntriesClasses"
+                    border="1"
+                    class="blue-table"
+                    style="margin-top: 30px"
+                  >
+                    <tr>
+                      <th colspan="2" class="unidade-texto">Unidade</th>
+                    </tr>
                     <tr>
                       <th>Li</th>
                       <th>Ls</th>
@@ -182,6 +203,7 @@
                           type="number"
                           class="centered-input class-input"
                           id="0"
+                          placeholder="..."
                         />
                       </td>
                       <td>
@@ -189,6 +211,7 @@
                           type="number"
                           class="centered-input class-input"
                           id="1"
+                          placeholder="..."
                         />
                       </td>
                     </tr>

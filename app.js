@@ -4,7 +4,7 @@ let placeholderSize = 3;
 let t = 0;
 let pageId = "dados";
 let componentId = "tabela";
-let tipoUnidade = "Xi";
+let tipoUnidade = "Unidade";
 let tablePosition = 2;
 
 // Alternar menu mobile
@@ -39,6 +39,7 @@ function lerTabela() {
     for (let i = placeholderSize; i > 0; i--) {
       values.pop();
     }
+    values.shift();
     console.log("Lendo Tabela:", values);
   }
 }
@@ -81,10 +82,10 @@ function reiniciarTasks() {
 function reiniciar() {
   reiniciarTasks();
   document.querySelector("#dataEntries").innerHTML =
-    '<tr id="row-placeholder"><td></td><td></td><td></td></tr>';
+    '<tr> <th colspan="3" class="unidade-texto">Unidade</th> </tr><tr id="row-placeholder"><td></td><td></td><td></td></tr>';
   document.querySelector(
     "#dataEntriesFi",
-  ).innerHTML = `<tr> <th>Xi</th> <th>Fi</th> </tr> <tr> <td> <input type="number" class="centered-input fi-input" id="0" placeholder="..." /> </td> <td> <input type="number" class="centered-input fi-input fi-min" id="1" placeholder="..." min="1" /> </td> </tr>`;
+  ).innerHTML = `<tr> <th>Unidade</th> <th>Fi</th> </tr> <tr> <td> <input type="number" class="centered-input fi-input" id="0" placeholder="..." /> </td> <td> <input type="number" class="centered-input fi-input fi-min" id="1" placeholder="..." min="1" /> </td> </tr>`;
   document.querySelector("#unidadeInput").value = "";
   document.querySelectorAll(".fi-input.fi-min").forEach((inputField) => {
     inputField.addEventListener("input", (e) => {
@@ -93,7 +94,7 @@ function reiniciar() {
       }
     });
   });
-  tipoUnidade = "";
+  tipoUnidade = "Unidade";
   values = [];
   informacoes = [];
   placeholderSize = 3;
@@ -132,7 +133,7 @@ function changePage(pageId) {
 }
 
 // Configurar event listeners quando o DOM estiver carregado
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
   // Adicionar eventos de clique aos itens de navegação
   document.querySelectorAll(".nav-item").forEach((item) => {
     item.addEventListener("click", function () {
@@ -231,7 +232,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       let rowPlaceholder = document.querySelector("#row-placeholder");
       let table = document.querySelector("#dataEntries");
-      let row = table.rows[0];
+      let row = table.rows[1];
 
       if (placeholderSize > 0) {
         rowPlaceholder.deleteCell(t);
@@ -240,7 +241,7 @@ document.addEventListener("DOMContentLoaded", function () {
       let cell = row.insertCell(t);
       t++;
       if ((row.cells.length - placeholderSize) % 3 == 0) {
-        row = table.insertRow(0);
+        row = table.insertRow(1);
         t = 0;
       }
       cell.textContent = currentValue;
@@ -270,29 +271,32 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-function formatarInput() {}
+function formatarInput() {
+  document.querySelectorAll(".fi-input.fi-min").forEach((inputField) => {
+    inputField.addEventListener("input", (e) => {
+      if (Number(inputField.value) < 1 && inputField.value !== "") {
+        inputField.value = 1;
+      }
+    });
+  });
+}
+formatarInput();
 
-document.querySelectorAll(".fi-input.fi-min").forEach((inputField) => {
-  inputField.addEventListener("input", (e) => {
-    if (Number(inputField.value) < 1 && inputField.value !== "") {
-      inputField.value = 1;
+document.querySelector("#unidadeInput").addEventListener("input", (e) => {
+  tipoUnidade = e.target.value;
+  document.querySelectorAll(".unidade-texto").forEach((unidade) => {
+    if (tipoUnidade !== "") {
+      unidade.textContent = tipoUnidade;
+    } else {
+      tipoUnidade = "Unidade";
+      unidade.textContent = tipoUnidade;
     }
   });
 });
 
-document.querySelector("#unidadeInput").addEventListener("input", (e) => {
-  console.log(e.target.value);
-  tipoUnidade = e.target.value;
-  if (tipoUnidade !== "") {
-    document.querySelector("#fi-xi").textContent = tipoUnidade;
-  } else {
-    tipoUnidade = "Xi";
-    document.querySelector("#fi-xi").textContent = tipoUnidade;
-  }
-});
-
 document.querySelector("#nova-linha").addEventListener("click", () => {
   novaLinha();
+  formatarInput();
 });
 
 document.querySelector("#remover-linha").addEventListener("click", () => {
@@ -303,6 +307,11 @@ document.querySelector("#apagar-tabela").addEventListener("click", () => {
   placeholderSize = 3;
   t = 0;
   document.querySelector("#dataEntries").innerHTML = `
+    <tr>
+      <th colspan="3" class="unidade-texto">
+        Unidade
+      </th>
+    </tr>
     <tr id="row-placeholder">
       <td></td>
       <td></td>
