@@ -14,19 +14,19 @@ document.getElementById("menuToggle").addEventListener("click", function () {
 });
 
 function lerTabela() {
+  values = [];
   if (componentId === "fi") {
     let table = document.querySelector("#dataEntriesFi");
     let rows = table.querySelectorAll("tr");
-    console.log(rows);
     rows.forEach((row) => {
       let inputs = row.querySelectorAll("input");
       let rowData = [];
       inputs.forEach((input) => {
-        rowData.push(Number(input.value));
+        values.push(Number(input.value));
       });
-      values.push(rowData);
     });
-    values.shift();
+    console.log(values);
+    values = converterFiToTabelaValues(values);
     console.log("Lendo Fi:", values);
   } else if (componentId === "tabela" && placeholderSize < 3) {
     let table = document.querySelector("#dataEntries");
@@ -47,10 +47,10 @@ function novaLinha() {
   let table = document.querySelector("#dataEntriesFi");
   let row = table.insertRow();
   let cell = row.insertCell();
-  cell.innerHTML = `<input type="number" class="centered-input fi-input" data="${tablePosition}" placeholder="0">`;
+  cell.innerHTML = `<input type="number" class="centered-input fi-input" id="${tablePosition}" placeholder="...">`;
   tablePosition++;
   cell = row.insertCell();
-  cell.innerHTML = `<input type="number" class="centered-input fi-input fi-min" data="${tablePosition}" placeholder="1" min="1">`;
+  cell.innerHTML = `<input type="number" class="centered-input fi-input fi-min" id="${tablePosition}" placeholder="..." min="1">`;
   tablePosition++;
 
   document.querySelectorAll("input[data]").forEach((inputField) => {
@@ -89,7 +89,7 @@ function reiniciar() {
     '<tr id="row-placeholder"><td></td><td></td><td></td></tr>';
   document.querySelector(
     "#dataEntriesFi",
-  ).innerHTML = `<tr> <th>Xi</th> <th>Fi</th> </tr> <tr> <td> <input type="number" class="centered-input fi-input" data="0" placeholder="0" /> </td> <td> <input type="number" class="centered-input fi-input fi-min" data="1" placeholder="1" min="1" /> </td> </tr>`;
+  ).innerHTML = `<tr> <th>Xi</th> <th>Fi</th> </tr> <tr> <td> <input type="number" class="centered-input fi-input" id="0" placeholder="..." /> </td> <td> <input type="number" class="centered-input fi-input fi-min" id="1" placeholder="..." min="1" /> </td> </tr>`;
   document.querySelector("#unidadeInput").value = "";
   tipoUnidade = "";
   values = [];
@@ -130,24 +130,6 @@ function changePage(pageId) {
   document.querySelectorAll(".nav-item").forEach((item) => {
     item.classList.remove("active");
   });
-
-  document
-    .querySelector(`.nav-item[data-page="${pageId}"]`)
-    .classList.add("active");
-
-  document
-    .querySelector(`.nav-item[data-page="${pageId}"]`)
-    .classList.add("active");
-
-  document
-    .querySelector(`.nav-item[data-page="${pageId}"]`)
-    .classList.remove("deactive");
-
-  // Fechar menu mobile se estiver aberto
-  const sidebar = document.getElementById("sidebar");
-  if (sidebar.classList.contains("active")) {
-    sidebar.classList.remove("active");
-  }
 }
 
 // Configurar event listeners quando o DOM estiver carregado
@@ -162,16 +144,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Adicionar eventos de clique aos botões com atributo data-page
   document.querySelectorAll("button[data-page]").forEach((button) => {
-    button.addEventListener("click", function () {
-      pageId = this.getAttribute("data-page");
+    button.addEventListener("click", () => {
+      pageId = button.getAttribute("data-page");
       if (pageId === "resultados") {
-        document.querySelectorAll(".fi-input.fi-min").forEach((inputField) => {
-          if (Number(inputField.value) < 1 && inputField.value === "") {
-            inputField.value = 1;
-          }
-        });
         lerTabela();
         tipoUnidade = document.querySelector("#unidadeInput").value;
+        let todosFeitos = true;
+        document.querySelectorAll(".fi-input").forEach((input) => {
+          if (!input.value) {
+            todosFeitos = false;
+          }
+        });
+        console.log(todosFeitos);
         if (
           informacoes.length > 0 &&
           values.length > 0 &&
@@ -179,13 +163,19 @@ document.addEventListener("DOMContentLoaded", function () {
         ) {
           changePage(pageId);
         } else if (values.length === 0) {
-          showNotification("Você não digitou nenhum dado.");
+          if (componentId === "fi" && !todosFeitos) {
+            showNotification(
+              "Por favor, preencha todos os campos obrigatórios.",
+            );
+          } else {
+            showNotification("Você não digitou nenhum dado.");
+          }
         } else if (informacoes.length === 0) {
           showNotification("Você não selecionou nenhuma opção de cálculo.");
         } else {
           showNotification("Você não digitou um tipo de unidade");
         }
-      } else if (pageId === "dados") {
+      } else {
         reiniciar();
       }
     });
@@ -277,12 +267,13 @@ document.addEventListener("DOMContentLoaded", function () {
       // cell.textContent = values[values.length - 1];
     }
   });
-  document.querySelectorAll(".fi-input.fi-min").forEach((inputField) => {
-    inputField.addEventListener("input", (e) => {
-      if (Number(inputField.value) < 1 && inputField.value !== "") {
-        inputField.value = 1;
-      }
-    });
+});
+
+document.querySelectorAll(".fi-input.fi-min").forEach((inputField) => {
+  inputField.addEventListener("input", (e) => {
+    if (Number(inputField.value) < 1 && inputField.value !== "") {
+      inputField.value = 1;
+    }
   });
 });
 
@@ -292,6 +283,18 @@ document.querySelector("#nova-linha").addEventListener("click", () => {
 
 document.querySelector("#remover-linha").addEventListener("click", () => {
   removerLinha();
+});
+
+document.querySelector("#apagar-tabela").addEventListener("click", () => {
+  placeholderSize = 3;
+  t = 0;
+  document.querySelector("#dataEntries").innerHTML = `
+    <tr id="row-placeholder">
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  `;
 });
 
 document.querySelectorAll(".task").forEach((task) => {

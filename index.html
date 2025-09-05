@@ -61,7 +61,21 @@
                     </button>
                   </div>
                   <div class="tabela component active">
-                    <h3>Entrada</h3>
+                    <div>
+                      <h3 style="display: inline">Entrada:</h3>
+                      <button
+                        id="apagar-tabela"
+                        class="btn-secondary"
+                        style="
+                          height: 30px;
+                          background-color: #a2a2a2;
+                          color: white;
+                          font-weight: 800;
+                        "
+                      >
+                        Apagar dados da tabela
+                      </button>
+                    </div>
                     <p>Garanta que pressionou "Enter" após cada dado.</p>
                     <div class="centered-container">
                       <input
@@ -137,16 +151,16 @@
                         <input
                           type="number"
                           class="centered-input fi-input"
-                          data="0"
-                          placeholder="0"
+                          id="0"
+                          placeholder="..."
                         />
                       </td>
                       <td>
                         <input
                           type="number"
                           class="centered-input fi-input fi-min"
-                          data="1"
-                          placeholder="1"
+                          id="1"
+                          placeholder="..."
                           min="1"
                         />
                       </td>
