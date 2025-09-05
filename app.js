@@ -50,7 +50,7 @@ function novaLinha() {
   cell.innerHTML = `<input type="number" class="centered-input fi-input" data="${tablePosition}" placeholder="0">`;
   tablePosition++;
   cell = row.insertCell();
-  cell.innerHTML = `<input type="number" class="centered-input fi-input" data="${tablePosition}" placeholder="0">`;
+  cell.innerHTML = `<input type="number" class="centered-input fi-input fi-min" data="${tablePosition}" placeholder="1" min="1">`;
   tablePosition++;
 
   document.querySelectorAll("input[data]").forEach((inputField) => {
@@ -89,7 +89,7 @@ function reiniciar() {
     '<tr id="row-placeholder"><td></td><td></td><td></td></tr>';
   document.querySelector(
     "#dataEntriesFi",
-  ).innerHTML = `<tr> <th>Xi</th> <th>Fi</th> </tr> <tr> <td> <input type="number" class="centered-input fi-input" data="0" placeholder="0" /> </td> <td> <input type="number" class="centered-input fi-input" data="1" placeholder="0" /> </td> </tr>`;
+  ).innerHTML = `<tr> <th>Xi</th> <th>Fi</th> </tr> <tr> <td> <input type="number" class="centered-input fi-input" data="0" placeholder="0" /> </td> <td> <input type="number" class="centered-input fi-input fi-min" data="1" placeholder="1" min="1" /> </td> </tr>`;
   document.querySelector("#unidadeInput").value = "";
   tipoUnidade = "";
   values = [];
@@ -165,6 +165,11 @@ document.addEventListener("DOMContentLoaded", function () {
     button.addEventListener("click", function () {
       pageId = this.getAttribute("data-page");
       if (pageId === "resultados") {
+        document.querySelectorAll(".fi-input.fi-min").forEach((inputField) => {
+          if (Number(inputField.value) < 1 && inputField.value === "") {
+            inputField.value = 1;
+          }
+        });
         lerTabela();
         tipoUnidade = document.querySelector("#unidadeInput").value;
         if (
@@ -189,7 +194,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll("button[data-component]").forEach((button) => {
     button.addEventListener("click", () => {
       button.classList.add("mini-button");
-      lerTabela();
+      // lerTabela();
       componentId = button.getAttribute("data-component");
       mudarComponente(componentId);
     });
@@ -272,18 +277,10 @@ document.addEventListener("DOMContentLoaded", function () {
       // cell.textContent = values[values.length - 1];
     }
   });
-  document.querySelectorAll(".fi-input").forEach((inputField) => {
-    inputField.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") {
-        let table = document.querySelector("#dataEntriesFi");
-        if (Number(inputField.value) === 0) {
-          inputField.value = 0;
-        }
-        console.log(
-          inputField.getAttribute("data"),
-          " - ",
-          Number(inputField.value),
-        );
+  document.querySelectorAll(".fi-input.fi-min").forEach((inputField) => {
+    inputField.addEventListener("input", (e) => {
+      if (Number(inputField.value) < 1 && inputField.value !== "") {
+        inputField.value = 1;
       }
     });
   });
