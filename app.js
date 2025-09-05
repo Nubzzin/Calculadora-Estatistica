@@ -85,7 +85,7 @@ function reiniciar() {
     '<tr> <th colspan="3" class="unidade-texto">Unidade</th> </tr><tr id="row-placeholder"><td></td><td></td><td></td></tr>';
   document.querySelector(
     "#dataEntriesFi",
-  ).innerHTML = `<tr> <th>Unidade</th> <th>Fi</th> </tr> <tr> <td> <input type="number" class="centered-input fi-input" id="0" placeholder="..." /> </td> <td> <input type="number" class="centered-input fi-input fi-min" id="1" placeholder="..." min="1" /> </td> </tr>`;
+  ).innerHTML = `<tr> <th class="unidade-texto">Unidade</th> <th>Fi</th> </tr> <tr> <td> <input type="number" class="centered-input fi-input" id="0" placeholder="..." /> </td> <td> <input type="number" class="centered-input fi-input fi-min" id="1" placeholder="..." min="1" /> </td> </tr>`;
   document.querySelector("#unidadeInput").value = "";
   document.querySelectorAll(".fi-input.fi-min").forEach((inputField) => {
     inputField.addEventListener("input", (e) => {
@@ -160,9 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
           changePage(pageId);
         } else if (values.length === 0) {
           if (componentId === "fi" && !todosFeitos) {
-            showNotification(
-              "Por favor, preencha pelo menos uma linha completa.",
-            );
+            showNotification("Preencha pelo menos uma linha completa.");
           } else {
             showNotification("Você não digitou nenhum dado.");
           }
@@ -222,7 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
         currentValue = Number(inputTabela.value);
         inputTabela.value = "";
       } catch (err) {
-        showNotification("Entrada inválida. Por favor, insira um número.");
+        showNotification("Entrada inválida. Insira um número.");
       }
       let rowPlaceholder = document.querySelector("#row-placeholder");
       let table = document.querySelector("#dataEntries");
