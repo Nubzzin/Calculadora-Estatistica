@@ -4,7 +4,7 @@ let placeholderSize = 3;
 let t = 0;
 let pageId = "dados";
 let componentId = "tabela";
-let tipoUnidade = "u";
+let tipoUnidade = "Xi";
 let tablePosition = 2;
 
 // Alternar menu mobile
@@ -60,11 +60,6 @@ function novaLinha() {
         if (Number(inputField.value) === 0) {
           inputField.value = 0;
         }
-        console.log(
-          inputField.getAttribute("data"),
-          " - ",
-          Number(inputField.value),
-        );
       }
     });
   });
@@ -91,6 +86,13 @@ function reiniciar() {
     "#dataEntriesFi",
   ).innerHTML = `<tr> <th>Xi</th> <th>Fi</th> </tr> <tr> <td> <input type="number" class="centered-input fi-input" id="0" placeholder="..." /> </td> <td> <input type="number" class="centered-input fi-input fi-min" id="1" placeholder="..." min="1" /> </td> </tr>`;
   document.querySelector("#unidadeInput").value = "";
+  document.querySelectorAll(".fi-input.fi-min").forEach((inputField) => {
+    inputField.addEventListener("input", (e) => {
+      if (Number(inputField.value) < 1 && inputField.value !== "") {
+        inputField.value = 1;
+      }
+    });
+  });
   tipoUnidade = "";
   values = [];
   informacoes = [];
@@ -125,11 +127,8 @@ function changePage(pageId) {
 
   // Mostrar a página selecionada
   document.getElementById(pageId).classList.add("active");
-
-  // Atualizar item de navegação ativo
-  document.querySelectorAll(".nav-item").forEach((item) => {
-    item.classList.remove("active");
-  });
+  resultadosTexto = document.getElementById("resultados-texto");
+  resultadosTexto.innerText = "Resultados: " + values;
 }
 
 // Configurar event listeners quando o DOM estiver carregado
@@ -271,12 +270,25 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+function formatarInput() {}
+
 document.querySelectorAll(".fi-input.fi-min").forEach((inputField) => {
   inputField.addEventListener("input", (e) => {
     if (Number(inputField.value) < 1 && inputField.value !== "") {
       inputField.value = 1;
     }
   });
+});
+
+document.querySelector("#unidadeInput").addEventListener("input", (e) => {
+  console.log(e.target.value);
+  tipoUnidade = e.target.value;
+  if (tipoUnidade !== "") {
+    document.querySelector("#fi-xi").textContent = tipoUnidade;
+  } else {
+    tipoUnidade = "Xi";
+    document.querySelector("#fi-xi").textContent = tipoUnidade;
+  }
 });
 
 document.querySelector("#nova-linha").addEventListener("click", () => {

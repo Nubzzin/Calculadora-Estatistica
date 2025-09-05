@@ -118,5 +118,5 @@ console.log("Valores:", valores);
 //     agrupamentoDiscreto(valores),
 //   ),
 // );
-console.log(converterFiToTabelaValues(valores));
-console.log(converterTabelaToFiValues(valores));
+// console.log(converterFiToTabelaValues(valores));
+// console.log(converterTabelaToFiValues(valores));
