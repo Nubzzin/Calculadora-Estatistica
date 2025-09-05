@@ -156,11 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         });
         console.log(todosFeitos);
-        if (
-          informacoes.length > 0 &&
-          values.length > 0 &&
-          tipoUnidade.length > 0
-        ) {
+        if (informacoes.length > 0 && values.length > 0) {
           changePage(pageId);
         } else if (values.length === 0) {
           if (componentId === "fi" && !todosFeitos) {
@@ -174,8 +170,6 @@ document.addEventListener("DOMContentLoaded", () => {
           showNotification(
             "Você não selecionou pelo menos uma opção de cálculo.",
           );
-        } else {
-          showNotification("Você não digitou um tipo de unidade.");
         }
       } else {
         reiniciar();
