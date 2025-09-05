@@ -11,31 +11,12 @@
       <header class="app-header">
         <div class="header-content">
           <h1 class="app-title">Calculadora de Estatística</h1>
-          <button class="menu-toggle" id="menuToggle">☰</button>
+          <button class="menu-toggle" id="menuToggle"></button>
         </div>
       </header>
 
       <div class="main-container">
         <main class="content-area">
-          <!-- Página Início -->
-          <div class="page" id="inicio">
-            <div class="content-header">
-              <h2>Início</h2>
-            </div>
-            <div class="card-container">
-              <div class="card">
-                <h3>Calculadora de Estatística</h3>
-                <p>
-                  Este é um template simples para você construir em cima. Comece
-                  adicionando seus componentes aqui.
-                </p>
-                <button class="btn-secondary" data-page="dados">
-                  Ver Dados
-                </button>
-              </div>
-            </div>
-          </div>
-
           <!-- Página Dados -->
           <div class="page active" id="dados">
             <div class="cards-row">
@@ -62,10 +43,21 @@
                         background-color: #4cc95b;
                         color: white;
                         font-weight: 800;
-                        margin-top: 50px;
+                        margin-top: 20px;
                       "
                     >
                       Nova Linha +
+                    </button>
+                    <button
+                      id="remover-linha"
+                      class="fi component btn-secondary"
+                      style="
+                        background-color: #e74c3c;
+                        color: white;
+                        font-weight: 800;
+                      "
+                    >
+                      Remover Linha -
                     </button>
                   </div>
                   <div class="tabela component active">
@@ -94,17 +86,17 @@
                     />
                   </div>
                   <div class="task-container">
-                    <div class="task" data="media">Media</div>
+                    <div class="task" data="media">Média</div>
                     <div class="task" data="moda">Moda/Czuber</div>
                     <div class="task" data="mediana">Mediana</div>
-                    <div class="task" data="variancia">Variancia</div>
+                    <div class="task" data="variancia">Variância</div>
                     <div class="task" data="coeficiente">
-                      Coeficiencia de Variacao
+                      Coeficiência de Variação
                     </div>
                     <div class="task" data="agrupamento">
                       Agrupamento Discreto
                     </div>
-                    <div class="task" data="desvio">Desvio Padrao</div>
+                    <div class="task" data="desvio">Desvio Padrão</div>
                   </div>
                   <div class="action-buttons">
                     <button
@@ -146,6 +138,7 @@
                           type="number"
                           class="centered-input fi-input"
                           data="0"
+                          placeholder="0"
                         />
                       </td>
                       <td>
@@ -153,13 +146,14 @@
                           type="number"
                           class="centered-input fi-input"
                           data="1"
+                          placeholder="0"
                         />
                       </td>
                     </tr>
                   </table>
                 </div>
                 <div class="classes component">
-                  <table id="dataEntriesFi" border="1" class="blue-table">
+                  <table id="dataEntriesClasses" border="1" class="blue-table">
                     <tr>
                       <th>Li</th>
                       <th>Ls</th>
@@ -168,14 +162,14 @@
                       <td>
                         <input
                           type="number"
-                          class="centered-input fi-input"
+                          class="centered-input class-input"
                           id="0"
                         />
                       </td>
                       <td>
                         <input
                           type="number"
-                          class="centered-input fi-input"
+                          class="centered-input class-input"
                           id="1"
                         />
                       </td>

@@ -440,11 +440,13 @@ td {
     font-weight: 800;
 }
 
-.centered-input.fi-input {
+.centered-input.fi-input,
+.centered-input.class-input {
     width: 120px;
     display: inline;
 
 }
+
 .cards-row {
   display: flex;
   gap: 30px;

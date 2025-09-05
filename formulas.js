@@ -77,8 +77,33 @@ function coeficienteVariacao(desvioPadrao, agrupamentoDiscreto) {
   return (100 * desvioPadrao) / agrupamentoDiscreto[1];
 }
 
+function converterFiValues(valores) {
+  let resultado = [];
+  for (let i = 0; i < valores.length; i += 2) {
+    for (let j = 0; j < valores[i + 1]; j++) {
+      resultado.push(valores[i]);
+    }
+  }
+  return resultado;
+}
+
+function converterTabelaValues(valores) {
+  let mapa = {};
+  let resultado = [];
+
+  valores.forEach((x) => {
+    mapa[x] = (mapa[x] || 0) + 1;
+  });
+
+  for (let key in mapa) {
+    resultado.push([key, mapa[key]]);
+  }
+
+  return resultado;
+}
+
 // Testes
-// let valores = [1, 1, 2, 3, 4, 4];
+let valores = [1, 1, 3, 2, 4, 1];
 // console.log("Média:", media(valores));
 // console.log("Mediana:", mediana(valores));
 // console.log("Moda:", moda(valores));
@@ -92,3 +117,5 @@ function coeficienteVariacao(desvioPadrao, agrupamentoDiscreto) {
 //     agrupamentoDiscreto(valores),
 //   ),
 // );
+// console.log(converterFiValues(valores));
+// console.log(converterTabelaValues(valores));

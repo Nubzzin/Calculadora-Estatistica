@@ -2,9 +2,9 @@ let values = [];
 let informacoes = [];
 let placeholderSize = 3;
 let t = 0;
-let pageId = "";
-let componentId = "";
-let tipoUnidade = "";
+let pageId = "dados";
+let componentId = "tabela";
+let tipoUnidade = "u";
 let tablePosition = 2;
 
 // Alternar menu mobile
@@ -13,14 +13,44 @@ document.getElementById("menuToggle").addEventListener("click", function () {
   sidebar.classList.toggle("active");
 });
 
+function lerTabela() {
+  if (componentId === "fi") {
+    let table = document.querySelector("#dataEntriesFi");
+    let rows = table.querySelectorAll("tr");
+    console.log(rows);
+    rows.forEach((row) => {
+      let inputs = row.querySelectorAll("input");
+      let rowData = [];
+      inputs.forEach((input) => {
+        rowData.push(Number(input.value));
+      });
+      values.push(rowData);
+    });
+    values.shift();
+    console.log("Lendo Fi:", values);
+  } else if (componentId === "tabela" && placeholderSize < 3) {
+    let table = document.querySelector("#dataEntries");
+    let rows = table.querySelectorAll("tr");
+    for (let row of rows) {
+      for (let cell of row.cells) {
+        values.push(Number(cell.textContent));
+      }
+    }
+    for (let i = placeholderSize; i > 0; i--) {
+      values.pop();
+    }
+    console.log("Lendo Tabela:", values);
+  }
+}
+
 function novaLinha() {
   let table = document.querySelector("#dataEntriesFi");
   let row = table.insertRow();
   let cell = row.insertCell();
-  cell.innerHTML = `<input type="number" class="centered-input fi-input" data="${tablePosition}">`;
+  cell.innerHTML = `<input type="number" class="centered-input fi-input" data="${tablePosition}" placeholder="0">`;
   tablePosition++;
   cell = row.insertCell();
-  cell.innerHTML = `<input type="number" class="centered-input fi-input" data="${tablePosition}">`;
+  cell.innerHTML = `<input type="number" class="centered-input fi-input" data="${tablePosition}" placeholder="0">`;
   tablePosition++;
 
   document.querySelectorAll("input[data]").forEach((inputField) => {
@@ -40,6 +70,13 @@ function novaLinha() {
   });
 }
 
+function removerLinha() {
+  let table = document.querySelector("#dataEntriesFi");
+  if (table.rows.length > 2) {
+    let row = table.deleteRow(-1);
+  }
+}
+
 function reiniciarTasks() {
   document.querySelectorAll(".task").forEach((task) => {
     task.classList.remove("done");
@@ -52,7 +89,7 @@ function reiniciar() {
     '<tr id="row-placeholder"><td></td><td></td><td></td></tr>';
   document.querySelector(
     "#dataEntriesFi",
-  ).innerHTML = `<tr> <th>Xi</th> <th>Fi</th> </tr> <tr> <td> <input type="number" class="centered-input fi-input" data="0" /> </td> <td> <input type="number" class="centered-input fi-input" data="1" /> </td> </tr>`;
+  ).innerHTML = `<tr> <th>Xi</th> <th>Fi</th> </tr> <tr> <td> <input type="number" class="centered-input fi-input" data="0" placeholder="0" /> </td> <td> <input type="number" class="centered-input fi-input" data="1" placeholder="0" /> </td> </tr>`;
   document.querySelector("#unidadeInput").value = "";
   tipoUnidade = "";
   values = [];
@@ -128,6 +165,7 @@ document.addEventListener("DOMContentLoaded", function () {
     button.addEventListener("click", function () {
       pageId = this.getAttribute("data-page");
       if (pageId === "resultados") {
+        lerTabela();
         tipoUnidade = document.querySelector("#unidadeInput").value;
         if (
           informacoes.length > 0 &&
@@ -151,6 +189,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll("button[data-component]").forEach((button) => {
     button.addEventListener("click", () => {
       button.classList.add("mini-button");
+      lerTabela();
       componentId = button.getAttribute("data-component");
       mudarComponente(componentId);
     });
@@ -187,27 +226,50 @@ document.addEventListener("DOMContentLoaded", function () {
   let inputTabela = document.querySelector("#dataInput");
   inputTabela.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
-      let rowPlaceholder = document.querySelector("#row-placeholder");
+      let currentValue;
       try {
-        values.push(Number(inputTabela.value));
-        console.log("Array: ", values);
+        currentValue = Number(inputTabela.value);
         inputTabela.value = "";
       } catch (err) {
         showNotification("Entrada inválida. Por favor, insira um número.");
       }
+      let rowPlaceholder = document.querySelector("#row-placeholder");
       let table = document.querySelector("#dataEntries");
       let row = table.rows[0];
+
       if (placeholderSize > 0) {
         rowPlaceholder.deleteCell(t);
         placeholderSize--;
       }
       let cell = row.insertCell(t);
       t++;
-      if (values.length % 3 == 0) {
+      if ((row.cells.length - placeholderSize) % 3 == 0) {
         row = table.insertRow(0);
         t = 0;
       }
-      cell.textContent = values[values.length - 1];
+      cell.textContent = currentValue;
+
+      // let rowPlaceholder = document.querySelector("#row-placeholder");
+      // try {
+      //   values.push(Number(inputTabela.value));
+      //   console.log("Array: ", values);
+      //   inputTabela.value = "";
+      // } catch (err) {
+      //   showNotification("Entrada inválida. Por favor, insira um número.");
+      // }
+      // let table = document.querySelector("#dataEntries");
+      // let row = table.rows[0];
+      // if (placeholderSize > 0) {
+      //   rowPlaceholder.deleteCell(t);
+      //   placeholderSize--;
+      // }
+      // let cell = row.insertCell(t);
+      // t++;
+      // if (values.length % 3 == 0) {
+      //   row = table.insertRow(0);
+      //   t = 0;
+      // }
+      // cell.textContent = values[values.length - 1];
     }
   });
   document.querySelectorAll(".fi-input").forEach((inputField) => {
@@ -229,6 +291,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.querySelector("#nova-linha").addEventListener("click", () => {
   novaLinha();
+});
+
+document.querySelector("#remover-linha").addEventListener("click", () => {
+  removerLinha();
 });
 
 document.querySelectorAll(".task").forEach((task) => {
