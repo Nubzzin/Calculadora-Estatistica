@@ -28,6 +28,18 @@ body::-webkit-scrollbar {
     /* Chrome, Safari */
 }
 
+/* Chrome, Safari, Edge */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .app-container {
     display: flex;
     flex-direction: column;
@@ -142,6 +154,7 @@ body::-webkit-scrollbar {
     /* animation: fadeIn 0.3s ease; */
 }
 
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -234,7 +247,7 @@ body::-webkit-scrollbar {
 .task {
     font-size: 16px;
     padding: 8px;
-    border: 0px solid #333;
+    border: 1px solid #dfe6e9;
     border-radius: 8px;
     cursor: pointer;
     background: white;
@@ -480,4 +493,18 @@ td {
 .left-column .card,
 .right-column .card {
   width: 100%;
+}
+
+.component {
+    display: none;
+}
+
+.component.active {
+    display: block;
+}
+
+.tabela td:hover {
+  background-color: #ffcccc; /* light red background */
+  box-shadow: 0 0 10px red; /* glowing effect */
+  transition: 0.2s ease-in-out;
 }

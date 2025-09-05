@@ -3,6 +3,8 @@ let informacoes = [];
 let placeholderSize = 3;
 let t = 0;
 let pageId = "";
+let componentId = "";
+let tipoUnidade = "";
 let tablePosition = 2;
 
 // Alternar menu mobile
@@ -51,20 +53,30 @@ function reiniciar() {
   document.querySelector(
     "#dataEntriesFi",
   ).innerHTML = `<tr> <th>Xi</th> <th>Fi</th> </tr> <tr> <td> <input type="number" class="centered-input fi-input" data="0" /> </td> <td> <input type="number" class="centered-input fi-input" data="1" /> </td> </tr>`;
+  document.querySelector("#unidadeInput").value = "";
+  tipoUnidade = "";
   values = [];
   informacoes = [];
   placeholderSize = 3;
   t = 0;
   console.log(values);
   console.log(informacoes);
-  changePage("inicio");
+  changePage("dados");
 }
 
 function mudarComponente(componenteId) {
   document.querySelectorAll(".component").forEach((component) => {
     component.classList.remove("active");
   });
-  document.getElementById(componenteId).classList.add("active");
+  document
+    .querySelectorAll(`.component.${componenteId}`)
+    .forEach((component) => component.classList.add("active"));
+  document
+    .querySelectorAll("button[data-component]")
+    .forEach((button) => button.classList.remove("mini-button"));
+  document
+    .querySelector(`button[data-component="${componenteId}"]`)
+    .classList.add("mini-button");
 }
 
 // Função para mudar páginas
@@ -116,18 +128,31 @@ document.addEventListener("DOMContentLoaded", function () {
     button.addEventListener("click", function () {
       pageId = this.getAttribute("data-page");
       if (pageId === "resultados") {
-        if (informacoes.length > 0 && values.length > 0) {
+        tipoUnidade = document.querySelector("#unidadeInput").value;
+        if (
+          informacoes.length > 0 &&
+          values.length > 0 &&
+          tipoUnidade.length > 0
+        ) {
           changePage(pageId);
         } else if (values.length === 0) {
           showNotification("Você não digitou nenhum dado.");
+        } else if (informacoes.length === 0) {
+          showNotification("Você não selecionou nenhuma opção de cálculo.");
         } else {
-          showNotification("Você não selecionou nada.");
+          showNotification("Você não digitou um tipo de unidade");
         }
-      } else if (pageId === "resultados") {
+      } else if (pageId === "dados") {
         reiniciar();
-      } else {
-        changePage(pageId);
       }
+    });
+  });
+
+  document.querySelectorAll("button[data-component]").forEach((button) => {
+    button.addEventListener("click", () => {
+      button.classList.add("mini-button");
+      componentId = button.getAttribute("data-component");
+      mudarComponente(componentId);
     });
   });
 
@@ -185,7 +210,7 @@ document.addEventListener("DOMContentLoaded", function () {
       cell.textContent = values[values.length - 1];
     }
   });
-  document.querySelectorAll("input[data]").forEach((inputField) => {
+  document.querySelectorAll(".fi-input").forEach((inputField) => {
     inputField.addEventListener("keypress", (e) => {
       if (e.key === "Enter") {
         let table = document.querySelector("#dataEntriesFi");
