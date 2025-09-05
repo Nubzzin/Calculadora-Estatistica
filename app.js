@@ -165,15 +165,17 @@ document.addEventListener("DOMContentLoaded", function () {
         } else if (values.length === 0) {
           if (componentId === "fi" && !todosFeitos) {
             showNotification(
-              "Por favor, preencha todos os campos obrigatórios.",
+              "Por favor, preencha pelo menos uma linha completa.",
             );
           } else {
             showNotification("Você não digitou nenhum dado.");
           }
         } else if (informacoes.length === 0) {
-          showNotification("Você não selecionou nenhuma opção de cálculo.");
+          showNotification(
+            "Você não selecionou pelo menos uma opção de cálculo.",
+          );
         } else {
-          showNotification("Você não digitou um tipo de unidade");
+          showNotification("Você não digitou um tipo de unidade.");
         }
       } else {
         reiniciar();
@@ -198,10 +200,10 @@ document.addEventListener("DOMContentLoaded", function () {
     notification.textContent = message;
     notification.style.cssText = `
       position: fixed;
-      bottom: 80px; /* raised a little higher than 20px */
-      left: 60%;
+      bottom: 50%; /* raised a little higher than 20px */
+      left: 61.1%;
       transform: translateX(-50%);
-      background-color: #2c3e50;
+      background-color: #e74c3c;
       color: white;
       padding: 1rem;
       border-radius: 8px;
