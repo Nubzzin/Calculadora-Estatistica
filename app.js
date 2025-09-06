@@ -5,7 +5,7 @@ let t = 0;
 let pageId = "dados";
 let componentId = "tabela";
 let tipoUnidade = "Unidade";
-let tablePosition = 2;
+let tablePosition = 1;
 
 function lerTabela() {
   values = [];
@@ -40,57 +40,58 @@ function lerTabela() {
 
 function novaLinha() {
   let table = document.querySelector("#dataEntriesFi");
-  let row = table.insertRow(1);
+  let row = table.insertRow(-1);
   let cell = row.insertCell();
+  tablePosition++;
   cell.innerHTML = `<input type="number" class="centered-input fi-input" id="cell-${tablePosition}" placeholder="0">`;
-  tablePosition++;
   cell = row.insertCell();
-  cell.innerHTML = `<input type="number" class="centered-input fi-input fi-min" id="cell-${tablePosition}" placeholder="..." min="1">`;
   tablePosition++;
+  cell.innerHTML = `<input type="number" class="centered-input fi-input fi-min" id="cell-${tablePosition}" placeholder="..." min="1">`;
   formatarInput();
 }
 
 function removerLinha() {
   let table = document.querySelector("#dataEntriesFi");
-  tablePosition -= 2;
   if (table.rows.length > 2) {
-    table.deleteRow(1);
+    table.deleteRow(-1);
+    tablePosition -= 2;
   }
   console.log(tablePosition);
 }
 
-function reiniciarTasks() {
-  document.querySelectorAll(".task").forEach((task) => {
-    task.classList.remove("done");
-  });
-  informacoes = [];
-}
+// function reiniciarTasks() {
+//   document.querySelectorAll(".task").forEach((task) => {
+//     task.classList.remove("done");
+//   });
+//   informacoes = [];
+// }
 
-function reiniciar() {
-  // reiniciarTasks();
-  if (document.querySelector("#unidadeInput").value === "") {
-    tipoUnidade = "Unidade";
-  }
-  document.querySelector(
-    "#dataEntries",
-  ).innerHTML = `<tr> <th colspan="3" class="unidade-texto">${tipoUnidade}</th> </tr><tr id="row-placeholder"><td></td><td></td><td></td></tr>`;
-  document.querySelector(
-    "#dataEntriesFi",
-  ).innerHTML = `<tr> <th class="unidade-texto">${tipoUnidade}</th> <th>Fi</th> </tr> <tr> <td> <input type="number" class="centered-input fi-input" id="cell-0" placeholder="0" /> </td> <td> <input type="number" class="centered-input fi-input fi-min" id="cell-1" placeholder="..." min="1" /> </td> </tr>`;
-  document.querySelectorAll(".fi-input.fi-min").forEach((inputField) => {
-    inputField.addEventListener("input", (e) => {
-      if (Number(inputField.value) < 1 && inputField.value !== "") {
-        inputField.value = 1;
-      }
-    });
-  });
-  values = [];
-  placeholderSize = 3;
-  t = 0;
-  console.log(values);
-  console.log(informacoes);
-  changePage("dados");
-}
+// function reiniciar() {
+//   // reiniciarTasks();
+//   if (document.querySelector("#unidadeInput").value === "") {
+//     tipoUnidade = "Unidade";
+//   }
+//   document.querySelector(
+//     "#dataEntries",
+//   ).innerHTML = `<tr> <th colspan="3" class="unidade-texto">${tipoUnidade}</th> </tr><tr id="row-placeholder"><td></td><td></td><td></td></tr>`;
+//   document.querySelector(
+//     "#dataEntriesFi",
+//   ).innerHTML = `<tr> <th class="unidade-texto">${tipoUnidade}</th> <th>Fi</th> </tr> <tr> <td> <input type="number" class="centered-input fi-input" id="cell-0" placeholder="0" /> </td> <td> <input type="number" class="centered-input fi-input fi-min" id="cell-1" placeholder="..." min="1" /> </td> </tr>`;
+//   document.querySelectorAll(".fi-input.fi-min").forEach((inputField) => {
+//     inputField.addEventListener("input", (e) => {
+//       if (Number(inputField.value) < 1 && inputField.value !== "") {
+//         inputField.value = 1;
+//       }
+//     });
+//   });
+//   values = [];
+//   placeholderSize = 3;
+//   t = 0;
+//   console.log(values);
+//   console.log(informacoes);
+//   formatarInput();
+//   changePage("dados");
+// }
 
 function mudarComponente(componenteId) {
   document.querySelectorAll(".component").forEach((component) => {
@@ -116,8 +117,98 @@ function changePage(pageId) {
 
   // Mostrar a página selecionada
   document.getElementById(pageId).classList.add("active");
-  resultadosTexto = document.getElementById("resultados-texto");
-  resultadosTexto.innerText = "Resultados: " + values;
+
+  document.querySelectorAll(".result-item").forEach((item) => {
+    item.classList.remove("active");
+  });
+
+  let result;
+  if (informacoes.find((x) => x === "media")) {
+    result = document.querySelector("#resultado-media");
+    result.innerText = media(values);
+    result.innerText += " " + tipoUnidade;
+    result.parentElement.classList.add("active");
+  }
+  if (informacoes.find((x) => x === "moda")) {
+    let modaV = moda(values);
+    result = document.querySelector("#resultado-moda");
+    switch (modaV[0].length) {
+      case 0:
+        result.innerText = "Amodal";
+        break;
+      case 1:
+        result.innerText = "Unimodal: ";
+        break;
+      case 2:
+        result.innerText = "Bimodal: ";
+        break;
+      case 3:
+        result.innerText = "Trimodal: ";
+        break;
+      default:
+        result.innerText = "Multimodal: ";
+    }
+    result.innerText += " " + modaV[0];
+    result.parentElement.classList.add("active");
+  }
+  if (informacoes.find((x) => x === "moda-czuber")) {
+    result = document.querySelector("#resultado-moda-czuber");
+    if (componentId === "classes") {
+      // result.innerText = modaCzuber(values);
+      // result.innerText += " " + tipoUnidade;
+      result.innerText = "A fazer";
+    } else {
+      result.innerText = "Apenas para classes";
+    }
+    result.parentElement.classList.add("active");
+  }
+  if (informacoes.find((x) => x === "mediana")) {
+    result = document.querySelector("#resultado-mediana");
+    result.innerText = mediana(values);
+    result.innerText += " " + tipoUnidade;
+    result.parentElement.classList.add("active");
+  }
+  if (informacoes.find((x) => x === "variancia")) {
+    result = document.querySelector("#resultado-variancia");
+    let v = variancia(values);
+    if (v) {
+      result.innerText = v;
+      result.innerText += " " + tipoUnidade;
+    } else {
+      result.innerText = "Não Possui";
+    }
+    result.parentElement.classList.add("active");
+  }
+  if (informacoes.find((x) => x === "coeficiente")) {
+    result = document.querySelector("#resultado-coeficiente");
+    let cv = coeficienteVariacao(
+      desvioPadrao(variancia(values)),
+      agrupamentoDiscreto(values),
+    );
+    if (cv) {
+      result.innerText = cv;
+      result.innerText += "%";
+    } else {
+      result.innerText = "Não Possui";
+    }
+    result.parentElement.classList.add("active");
+  }
+  if (informacoes.find((x) => x === "agrupamento")) {
+    result = document.querySelector("#resultado-agrupamento");
+    result.innerText = agrupamentoDiscreto(values)[1];
+    result.parentElement.classList.add("active");
+  }
+  if (informacoes.find((x) => x === "desvio")) {
+    result = document.querySelector("#resultado-desvio");
+    let dp = desvioPadrao(variancia(values));
+    if (dp) {
+      result.innerText = dp;
+      result.innerText += " " + tipoUnidade;
+    } else {
+      result.innerText = "Não Possui";
+    }
+    result.parentElement.classList.add("active");
+  }
 }
 
 // Configurar event listeners quando o DOM estiver carregado
@@ -136,15 +227,14 @@ document.addEventListener("DOMContentLoaded", () => {
       pageId = button.getAttribute("data-page");
       if (pageId === "resultados") {
         lerTabela();
-        tipoUnidade = document.querySelector("#unidadeInput").value;
-        let todosFeitos = true;
+        todosFeitos = true;
         document.querySelectorAll(".fi-input").forEach((input) => {
           if (!input.value) {
             todosFeitos = false;
           }
         });
-        console.log(todosFeitos);
         if (informacoes.length > 0 && values.length > 0) {
+          values.sort((a, b) => a - b);
           changePage(pageId);
         } else if (values.length === 0) {
           if (componentId === "fi" && !todosFeitos) {
@@ -158,7 +248,14 @@ document.addEventListener("DOMContentLoaded", () => {
           );
         }
       } else {
-        reiniciar();
+        // reiniciar();
+        if (tipoUnidade === "Unidade") {
+          tipoUnidade = "u";
+          document.querySelectorAll(".unidade-texto").forEach((unidade) => {
+            unidade.textContent = tipoUnidade;
+          });
+        }
+        changePage(pageId);
       }
     });
   });
@@ -225,28 +322,6 @@ document.addEventListener("DOMContentLoaded", () => {
         t = 0;
       }
       cell.textContent = currentValue;
-
-      // let rowPlaceholder = document.querySelector("#row-placeholder");
-      // try {
-      //   values.push(Number(inputTabela.value));
-      //   console.log("Array: ", values);
-      //   inputTabela.value = "";
-      // } catch (err) {
-      //   showNotification("Entrada inválida. Por favor, insira um número.");
-      // }
-      // let table = document.querySelector("#dataEntries");
-      // let row = table.rows[0];
-      // if (placeholderSize > 0) {
-      //   rowPlaceholder.deleteCell(t);
-      //   placeholderSize--;
-      // }
-      // let cell = row.insertCell(t);
-      // t++;
-      // if (values.length % 3 == 0) {
-      //   row = table.insertRow(0);
-      //   t = 0;
-      // }
-      // cell.textContent = values[values.length - 1];
     }
   });
 });
@@ -257,6 +332,9 @@ function formatarInput() {
       if (Number(inputField.value) < 1 && inputField.value !== "") {
         inputField.value = 1;
       }
+      if (inputField.id === `cell-${tablePosition}`) {
+        novaLinha();
+      }
     });
   });
 }
@@ -264,6 +342,7 @@ formatarInput();
 
 document.querySelector("#unidadeInput").addEventListener("input", (e) => {
   tipoUnidade = e.target.value;
+  tipoUnidade = tipoUnidade.trim();
   document.querySelectorAll(".unidade-texto").forEach((unidade) => {
     if (tipoUnidade !== "") {
       unidade.textContent = tipoUnidade;

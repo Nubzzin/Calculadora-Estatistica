@@ -133,16 +133,14 @@
                   </div>
                   <div class="task-container">
                     <div class="task" data="media">Média</div>
-                    <div class="task" data="moda">Moda/Czuber</div>
                     <div class="task" data="mediana">Mediana</div>
+                    <div class="task" data="moda">Moda Bruta</div>
+                    <div class="task" data="moda-czuber">Moda Czuber</div>
                     <div class="task" data="variancia">Variância</div>
+                    <div class="task" data="desvio">Desvio Padrão</div>
                     <div class="task" data="coeficiente">
                       Coeficiência de Variação
                     </div>
-                    <div class="task" data="agrupamento">
-                      Agrupamento Discreto
-                    </div>
-                    <div class="task" data="desvio">Desvio Padrão</div>
                   </div>
                   <div class="action-buttons">
                     <button
@@ -258,15 +256,51 @@
           <div class="page" id="resultados">
             <div class="content-header">
               <h2>Resultados</h2>
-              <button class="btn-secondary" data-page="infos">Voltar</button>
             </div>
 
             <div class="card-container">
               <div class="card">
-                <h3>Resultados: <span id="resultados-texto"></span></h3>
-                <button class="btn-secondary" data-page="dados">
-                  Voltar ao início
-                </button>
+                <h3>Resultados</h3>
+                <div class="results-grid">
+                  <div class="result-item">
+                    <span>Média:</span>
+                    <span id="resultado-media">—</span>
+                  </div>
+                  <div class="result-item">
+                    <span>Moda Bruta: </span>
+                    <span id="resultado-moda">—</span>
+                  </div>
+                  <div class="result-item">
+                    <span>Moda de Czuber: </span>
+                    <span id="resultado-moda-czuber">—</span>
+                  </div>
+                  <div class="result-item">
+                    <span>Mediana:</span>
+                    <span id="resultado-mediana">—</span>
+                  </div>
+                  <div class="result-item">
+                    <span>Variância:</span>
+                    <span id="resultado-variancia">—</span>
+                  </div>
+                  <div class="result-item">
+                    <span>Coeficiente de Variação:</span>
+                    <span id="resultado-coeficiente">—</span>
+                  </div>
+                  <div class="result-item">
+                    <span>Agrupamento Discreto:</span>
+                    <span id="resultado-agrupamento">—</span>
+                  </div>
+                  <div class="result-item">
+                    <span>Desvio Padrão:</span>
+                    <span id="resultado-desvio">—</span>
+                  </div>
+                </div>
+
+                <div class="action-buttons" style="margin-top: 20px">
+                  <button class="btn-secondary" data-page="dados">
+                    Voltar ao início
+                  </button>
+                </div>
               </div>
             </div>
           </div>

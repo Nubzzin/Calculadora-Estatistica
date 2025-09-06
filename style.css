@@ -510,3 +510,27 @@ td {
   box-shadow: 0 0 10px red; /* glowing effect */
   transition: 0.2s ease-in-out;
 }
+.results-grid {
+  display: grid;
+  /* grid-template-columns: 1fr 1fr; */
+  gap: 12px 20px;
+  margin-top: 15px;
+}
+
+.result-item {
+  display: none;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+}
+.result-item.active {
+  display: flex;
+}
+
+.result-item span:first-child {
+  font-weight: bold;
+  color: #333;
+}

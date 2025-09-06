@@ -1,9 +1,13 @@
 function media(valores) {
-  return valores.reduce((soma, atual) => (soma += atual), 0) / valores.length;
+  return (
+    Math.round(
+      (valores.reduce((soma, atual) => (soma += atual), 0) / valores.length) *
+        100,
+    ) / 100
+  );
 }
 
 function mediana(valores) {
-  valores.sort((a, b) => a - b);
   if (valores.length % 2 == 0) {
     return (valores[valores.length / 2 - 1] + valores[valores.length / 2]) / 2;
   } else {
@@ -18,15 +22,13 @@ function moda(valores) {
   valores.forEach((x) => {
     mapa[x] = (mapa[x] || 0) + 1;
   });
-  if (moda[1] > 1) {
-    for (let key in mapa) {
-      if (mapa[key] > modas[1]) {
-        modas[1] = mapa[key];
-      }
+  for (let key in mapa) {
+    if (mapa[key] > modas[1]) {
+      modas[1] = mapa[key];
     }
   }
   for (let key in mapa) {
-    if (mapa[key] === modas[1]) {
+    if (mapa[key] === modas[1] && modas[1] > 1) {
       modas[0].push(key);
     }
   }
@@ -47,34 +49,34 @@ function agrupamentoDiscreto(valores) {
   soma[0].forEach((x) => {
     soma[1] += x;
   });
-  return [soma, soma[1] / fi];
+  return [soma, Math.round((soma[1] / fi) * 100) / 100];
 }
 
 function variancia(valores) {
   let mapa = {};
-  let fi = 0;
-  let ad = agrupamentoDiscreto(valores)[1];
+  let ad = media(valores);
   valores.forEach((x) => {
     mapa[x] = (mapa[x] || 0) + 1;
   });
   let soma = [];
   for (let key in mapa) {
     soma.push((key - ad) ** 2 * mapa[key]);
-    fi += mapa[key];
   }
   let resultado = 0;
   soma.forEach((x) => {
     resultado += x;
   });
-  return Number((resultado / fi).toFixed(2));
+  return Math.round(Number(resultado / (valores.length - 1)) * 100) / 100;
 }
 
 function desvioPadrao(variancia) {
-  return Math.sqrt(variancia);
+  return Math.round(Math.sqrt(variancia) * 100) / 100;
 }
 
 function coeficienteVariacao(desvioPadrao, agrupamentoDiscreto) {
-  return (100 * desvioPadrao) / agrupamentoDiscreto[1];
+  return (
+    Math.round(((100 * desvioPadrao) / agrupamentoDiscreto[1]) * 100) / 100
+  );
 }
 
 function converterFiToTabelaValues(valores) {
