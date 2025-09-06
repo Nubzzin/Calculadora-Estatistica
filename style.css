@@ -506,7 +506,7 @@ td {
 }
 
 .tabela td:hover {
-  background-color: #ffcccc; /* light red background */
+  background-color: #87bfff; /* light red background */
   box-shadow: 0 0 10px red; /* glowing effect */
   transition: 0.2s ease-in-out;
 }

@@ -7,12 +7,6 @@ let componentId = "tabela";
 let tipoUnidade = "Unidade";
 let tablePosition = 2;
 
-// Alternar menu mobile
-document.getElementById("menuToggle").addEventListener("click", function () {
-  const sidebar = document.getElementById("sidebar");
-  sidebar.classList.toggle("active");
-});
-
 function lerTabela() {
   values = [];
   if (componentId === "fi") {
@@ -46,47 +40,43 @@ function lerTabela() {
 
 function novaLinha() {
   let table = document.querySelector("#dataEntriesFi");
-  let row = table.insertRow();
+  let row = table.insertRow(1);
   let cell = row.insertCell();
-  cell.innerHTML = `<input type="number" class="centered-input fi-input" id="${tablePosition}" placeholder="...">`;
+  cell.innerHTML = `<input type="number" class="centered-input fi-input" id="cell-${tablePosition}" placeholder="...">`;
   tablePosition++;
   cell = row.insertCell();
-  cell.innerHTML = `<input type="number" class="centered-input fi-input fi-min" id="${tablePosition}" placeholder="..." min="1">`;
+  cell.innerHTML = `<input type="number" class="centered-input fi-input fi-min" id="cell-${tablePosition}" placeholder="..." min="1">`;
   tablePosition++;
-
-  document.querySelectorAll("input[data]").forEach((inputField) => {
-    inputField.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") {
-        let table = document.querySelector("#dataEntriesFi");
-        if (Number(inputField.value) === 0) {
-          inputField.value = 0;
-        }
-      }
-    });
-  });
+  formatarInput();
 }
 
 function removerLinha() {
   let table = document.querySelector("#dataEntriesFi");
+  tablePosition -= 2;
   if (table.rows.length > 2) {
-    let row = table.deleteRow(-1);
+    table.deleteRow(1);
   }
+  console.log(tablePosition);
 }
 
 function reiniciarTasks() {
   document.querySelectorAll(".task").forEach((task) => {
     task.classList.remove("done");
   });
+  informacoes = [];
 }
 
 function reiniciar() {
-  reiniciarTasks();
-  document.querySelector("#dataEntries").innerHTML =
-    '<tr> <th colspan="3" class="unidade-texto">Unidade</th> </tr><tr id="row-placeholder"><td></td><td></td><td></td></tr>';
+  // reiniciarTasks();
+  if (document.querySelector("#unidadeInput").value === "") {
+    tipoUnidade = "Unidade";
+  }
+  document.querySelector(
+    "#dataEntries",
+  ).innerHTML = `<tr> <th colspan="3" class="unidade-texto">${tipoUnidade}</th> </tr><tr id="row-placeholder"><td></td><td></td><td></td></tr>`;
   document.querySelector(
     "#dataEntriesFi",
-  ).innerHTML = `<tr> <th class="unidade-texto">Unidade</th> <th>Fi</th> </tr> <tr> <td> <input type="number" class="centered-input fi-input" id="0" placeholder="..." /> </td> <td> <input type="number" class="centered-input fi-input fi-min" id="1" placeholder="..." min="1" /> </td> </tr>`;
-  document.querySelector("#unidadeInput").value = "";
+  ).innerHTML = `<tr> <th class="unidade-texto">${tipoUnidade}</th> <th>Fi</th> </tr> <tr> <td> <input type="number" class="centered-input fi-input" id="cell-0" placeholder="..." /> </td> <td> <input type="number" class="centered-input fi-input fi-min" id="cell-1" placeholder="..." min="1" /> </td> </tr>`;
   document.querySelectorAll(".fi-input.fi-min").forEach((inputField) => {
     inputField.addEventListener("input", (e) => {
       if (Number(inputField.value) < 1 && inputField.value !== "") {
@@ -94,9 +84,7 @@ function reiniciar() {
       }
     });
   });
-  tipoUnidade = "Unidade";
   values = [];
-  informacoes = [];
   placeholderSize = 3;
   t = 0;
   console.log(values);
@@ -288,7 +276,6 @@ document.querySelector("#unidadeInput").addEventListener("input", (e) => {
 
 document.querySelector("#nova-linha").addEventListener("click", () => {
   novaLinha();
-  formatarInput();
 });
 
 document.querySelector("#remover-linha").addEventListener("click", () => {
