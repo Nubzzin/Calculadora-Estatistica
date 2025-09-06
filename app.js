@@ -42,7 +42,7 @@ function novaLinha() {
   let table = document.querySelector("#dataEntriesFi");
   let row = table.insertRow(1);
   let cell = row.insertCell();
-  cell.innerHTML = `<input type="number" class="centered-input fi-input" id="cell-${tablePosition}" placeholder="...">`;
+  cell.innerHTML = `<input type="number" class="centered-input fi-input" id="cell-${tablePosition}" placeholder="0">`;
   tablePosition++;
   cell = row.insertCell();
   cell.innerHTML = `<input type="number" class="centered-input fi-input fi-min" id="cell-${tablePosition}" placeholder="..." min="1">`;
@@ -76,7 +76,7 @@ function reiniciar() {
   ).innerHTML = `<tr> <th colspan="3" class="unidade-texto">${tipoUnidade}</th> </tr><tr id="row-placeholder"><td></td><td></td><td></td></tr>`;
   document.querySelector(
     "#dataEntriesFi",
-  ).innerHTML = `<tr> <th class="unidade-texto">${tipoUnidade}</th> <th>Fi</th> </tr> <tr> <td> <input type="number" class="centered-input fi-input" id="cell-0" placeholder="..." /> </td> <td> <input type="number" class="centered-input fi-input fi-min" id="cell-1" placeholder="..." min="1" /> </td> </tr>`;
+  ).innerHTML = `<tr> <th class="unidade-texto">${tipoUnidade}</th> <th>Fi</th> </tr> <tr> <td> <input type="number" class="centered-input fi-input" id="cell-0" placeholder="0" /> </td> <td> <input type="number" class="centered-input fi-input fi-min" id="cell-1" placeholder="..." min="1" /> </td> </tr>`;
   document.querySelectorAll(".fi-input.fi-min").forEach((inputField) => {
     inputField.addEventListener("input", (e) => {
       if (Number(inputField.value) < 1 && inputField.value !== "") {
