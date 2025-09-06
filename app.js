@@ -38,6 +38,19 @@ function lerTabela() {
   }
 }
 
+function lerTasks() {
+  informacoes = [];
+  document.querySelectorAll(".task").forEach((task) => {
+    if (
+      task.classList.contains("done") &&
+      !task.classList.contains("naopode")
+    ) {
+      informacoes.push(task.getAttribute("data"));
+    }
+  });
+  console.log("Lendo Tasks:", informacoes);
+}
+
 function novaLinha() {
   let table = document.querySelector("#dataEntriesFi");
   let row = table.insertRow(-1);
@@ -106,10 +119,14 @@ function mudarComponente(componenteId) {
   document
     .querySelector(`button[data-component="${componenteId}"]`)
     .classList.add("mini-button");
+  habilitarCzuberSeClasse();
 }
 
 // Função para mudar páginas
 function changePage(pageId) {
+  if (tipoUnidade === "Unidade") {
+    tipoUnidade = "u";
+  }
   // Esconder todas as páginas
   document.querySelectorAll(".page").forEach((page) => {
     page.classList.remove("active");
@@ -173,7 +190,7 @@ function changePage(pageId) {
     let v = variancia(values);
     if (v) {
       result.innerText = v;
-      result.innerText += " " + tipoUnidade;
+      result.innerText += " " + tipoUnidade + "²";
     } else {
       result.innerText = "Não Possui";
     }
@@ -227,6 +244,7 @@ document.addEventListener("DOMContentLoaded", () => {
       pageId = button.getAttribute("data-page");
       if (pageId === "resultados") {
         lerTabela();
+        lerTasks();
         todosFeitos = true;
         document.querySelectorAll(".fi-input").forEach((input) => {
           if (!input.value) {
@@ -249,12 +267,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       } else {
         // reiniciar();
-        if (tipoUnidade === "Unidade") {
-          tipoUnidade = "u";
-          document.querySelectorAll(".unidade-texto").forEach((unidade) => {
-            unidade.textContent = tipoUnidade;
-          });
-        }
         changePage(pageId);
       }
     });
@@ -340,6 +352,19 @@ function formatarInput() {
 }
 formatarInput();
 
+function habilitarCzuberSeClasse() {
+  if (componentId !== "classes") {
+    document
+      .querySelector(".task[data='moda-czuber']")
+      .classList.add("naopode");
+  } else {
+    document
+      .querySelector(".task[data='moda-czuber']")
+      .classList.remove("naopode");
+  }
+}
+habilitarCzuberSeClasse();
+
 document.querySelector("#unidadeInput").addEventListener("input", (e) => {
   tipoUnidade = e.target.value;
   tipoUnidade = tipoUnidade.trim();
@@ -380,13 +405,6 @@ document.querySelector("#apagar-tabela").addEventListener("click", () => {
 
 document.querySelectorAll(".task").forEach((task) => {
   task.addEventListener("click", () => {
-    let data = task.getAttribute("data");
-    if (!informacoes.find((info) => info === data)) {
-      informacoes.push(data);
-    } else {
-      informacoes = informacoes.filter((info) => info !== data);
-    }
-    console.log(informacoes);
     task.classList.toggle("done");
   });
 });

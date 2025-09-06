@@ -264,6 +264,12 @@ input[type=number] {
     color: white;
 }
 
+.task.naopode {
+    pointer-events: none;
+    background-color: #ff7161;
+    color: white;
+}
+
 /* Estilos dos eventos */
 .event {
     padding: 10px 0;
