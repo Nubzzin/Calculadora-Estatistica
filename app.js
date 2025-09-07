@@ -19,7 +19,6 @@ function lerTabela() {
         values.push(Number(input.value));
       });
     });
-    console.log(values);
     values = converterFiToTabelaValues(values);
     console.log("Lendo Fi:", values);
   } else if (componentId === "tabela" && placeholderSize < 3) {
@@ -59,7 +58,7 @@ function novaLinha() {
   cell.innerHTML = `<input type="number" class="centered-input fi-input" id="cell-${tablePosition}" placeholder="0">`;
   cell = row.insertCell();
   tablePosition++;
-  cell.innerHTML = `<input type="number" class="centered-input fi-input fi-min" id="cell-${tablePosition}" placeholder="..." min="1">`;
+  cell.innerHTML = `<input type="number" class="centered-input fi-input fi-min" id="cell-${tablePosition}" placeholder="1" min="1">`;
   formatarInput();
 }
 
@@ -69,7 +68,6 @@ function removerLinha() {
     table.deleteRow(-1);
     tablePosition -= 2;
   }
-  console.log(tablePosition);
 }
 
 // function reiniciarTasks() {
@@ -245,6 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (pageId === "resultados") {
         lerTabela();
         lerTasks();
+        desenharGrafico(values);
         todosFeitos = true;
         document.querySelectorAll(".fi-input").forEach((input) => {
           if (!input.value) {

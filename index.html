@@ -198,7 +198,7 @@
                           type="number"
                           class="centered-input fi-input fi-min"
                           id="cell-1"
-                          placeholder="..."
+                          placeholder="1"
                           min="1"
                         />
                       </td>
@@ -242,7 +242,7 @@
                           type="number"
                           class="centered-input class-input"
                           id="class-cell-3"
-                          placeholder="..."
+                          placeholder="1"
                         />
                       </td>
                     </tr>
@@ -254,56 +254,60 @@
 
           <!-- Página Resultados -->
           <div class="page" id="resultados">
-            <div class="content-header">
-              <h2>Resultados</h2>
-            </div>
+              <div class="cards-row">
+                <div class="left-column">
+                  <div class="card">
+                    <h3>Resultados</h3>
+                    <div class="results-grid">
+                      <div class="result-item">
+                        <span>Média:</span>
+                        <span id="resultado-media">—</span>
+                      </div>
+                      <div class="result-item">
+                        <span>Moda Bruta: </span>
+                        <span id="resultado-moda">—</span>
+                      </div>
+                      <div class="result-item">
+                        <span>Moda de Czuber: </span>
+                        <span id="resultado-moda-czuber">—</span>
+                      </div>
+                      <div class="result-item">
+                        <span>Mediana:</span>
+                        <span id="resultado-mediana">—</span>
+                      </div>
+                      <div class="result-item">
+                        <span>Variância:</span>
+                        <span id="resultado-variancia">—</span>
+                      </div>
+                      <div class="result-item">
+                        <span>Desvio Padrão:</span>
+                        <span id="resultado-desvio">—</span>
+                      </div>
+                      <div class="result-item">
+                        <span>Coeficiente de Variação:</span>
+                        <span id="resultado-coeficiente">—</span>
+                      </div>
+                      <div class="result-item">
+                        <span>Agrupamento Discreto:</span>
+                        <span id="resultado-agrupamento">—</span>
+                      </div>
+                    </div>
 
-            <div class="card-container">
-              <div class="card">
-                <h3>Resultados</h3>
-                <div class="results-grid">
-                  <div class="result-item">
-                    <span>Média:</span>
-                    <span id="resultado-media">—</span>
-                  </div>
-                  <div class="result-item">
-                    <span>Moda Bruta: </span>
-                    <span id="resultado-moda">—</span>
-                  </div>
-                  <div class="result-item">
-                    <span>Moda de Czuber: </span>
-                    <span id="resultado-moda-czuber">—</span>
-                  </div>
-                  <div class="result-item">
-                    <span>Mediana:</span>
-                    <span id="resultado-mediana">—</span>
-                  </div>
-                  <div class="result-item">
-                    <span>Variância:</span>
-                    <span id="resultado-variancia">—</span>
-                  </div>
-                  <div class="result-item">
-                    <span>Desvio Padrão:</span>
-                    <span id="resultado-desvio">—</span>
-                  </div>
-                  <div class="result-item">
-                    <span>Coeficiente de Variação:</span>
-                    <span id="resultado-coeficiente">—</span>
-                  </div>
-                  <div class="result-item">
-                    <span>Agrupamento Discreto:</span>
-                    <span id="resultado-agrupamento">—</span>
+                    <div class="action-buttons" style="margin-top: 20px">
+                      <button class="btn-secondary" data-page="dados">
+                        Voltar ao início
+                      </button>
+                    </div>
                   </div>
                 </div>
-
-                <div class="action-buttons" style="margin-top: 20px">
-                  <button class="btn-secondary" data-page="dados">
-                    Voltar ao início
-                  </button>
-                </div>
+                <div class="right-column">
+                  <div class="card">
+                    <h3>Gráficos</h3>
+                    <div class="chart-container">
+                      <canvas id="myChart"></canvas>
+                    </div>
+                  </div>
               </div>
-            </div>
-          </div>
         </main>
       </div>
 
@@ -312,7 +316,9 @@
       </footer>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="formulas.js"></script>
+    <script src="graficos.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

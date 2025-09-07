@@ -85,6 +85,9 @@ function converterFiToTabelaValues(valores) {
     for (let j = 0; j < valores[i + 1]; j++) {
       resultado.push(valores[i]);
     }
+    if (valores[i + 1] === 0) {
+      resultado.push(valores[i]);
+    }
   }
   return resultado;
 }
