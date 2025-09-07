@@ -55,18 +55,21 @@ function novaLinha() {
   let row = table.insertRow(-1);
   let cell = row.insertCell();
   tablePosition++;
-  cell.innerHTML = `<input type="number" class="centered-input fi-input" id="cell-${tablePosition}" placeholder="0">`;
+  cell.innerHTML = `<input type="number" class="centered-input fi-input" id="cell-${tablePosition}" placeholder="...">`;
   cell = row.insertCell();
   tablePosition++;
-  cell.innerHTML = `<input type="number" class="centered-input fi-input fi-min" id="cell-${tablePosition}" placeholder="1" min="1">`;
+  cell.innerHTML = `<input type="number" class="centered-input fi-input fi-min" id="cell-${tablePosition}" placeholder="..." min="1">`;
   formatarInput();
 }
 
 function removerLinha() {
   let table = document.querySelector("#dataEntriesFi");
-  if (table.rows.length > 2) {
+  if (table.rows.length > 3) {
     table.deleteRow(-1);
     tablePosition -= 2;
+  } else {
+    table.rows[2].cells[0].querySelector("input").value = "";
+    table.rows[2].cells[1].querySelector("input").value = "";
   }
 }
 
@@ -255,7 +258,7 @@ document.addEventListener("DOMContentLoaded", () => {
           changePage(pageId);
         } else if (values.length === 0) {
           if (componentId === "fi" && !todosFeitos) {
-            showNotification("Não repita valores na coluna esquerda");
+            showNotification("Complete pelo menos uma linha.");
           } else {
             showNotification("Você não digitou nenhum dado.");
           }
@@ -297,6 +300,7 @@ document.addEventListener("DOMContentLoaded", () => {
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.2);
       z-index: 1000;
+      font-weight: 800;
     `;
 
     // Adicionar à página
@@ -339,8 +343,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function formatarInput() {
   document.querySelectorAll(".fi-input").forEach((inputField) => {
-    inputField.addEventListener("input", (e) => {
-      novaLinha();
+    inputField.addEventListener("keypress", (e) => {
+      if (
+        (inputField.id === `cell-${tablePosition}` ||
+          inputField.id === `cell-${tablePosition - 1}`) &&
+        e.key !== "Enter" &&
+        e.key !== "Backspace" &&
+        !isNaN(Number(e.key))
+      ) {
+        novaLinha();
+      }
     });
   });
 

@@ -51,7 +51,10 @@ function desenharGrafico(values) {
         x: {
           title: {
             display: true,
-            text: "Valores",
+            text:
+              document.querySelector("#unidadeInput").value !== ""
+                ? tipoUnidade
+                : "Unidade",
           },
         },
         y: {

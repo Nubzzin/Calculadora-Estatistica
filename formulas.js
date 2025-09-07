@@ -84,20 +84,19 @@ function converterFiToTabelaValues(valores) {
   let mapa = {};
   for (let i = 0; i < valores.length; i += 2) {
     for (let j = 0; j < valores[i + 1]; j++) {
-      resultado.push(valores[i]);
+      if (valores[i] !== 0) {
+        resultado.push(valores[i]);
+      }
     }
-    if (valores[i + 1] === 0) {
-      resultado.push(valores[i]);
-    }
-  }
-  resultado.forEach((x) => {
-    mapa[x] = (mapa[x] || 0) + 1;
-  });
-  console.log(resultado);
-  for (let key in mapa) {
-    if (mapa[key] > 1) {
-      return [];
-    }
+    // resultado.forEach((x) => {
+    //   mapa[x] = (mapa[x] || 0) + 1;
+    // });
+    // console.log(resultado);
+    // for (let key in mapa) {
+    //   if (mapa[key] > 1) {
+    //     return [];
+    //   }
+    // }
   }
   return resultado;
 }
