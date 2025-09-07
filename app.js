@@ -255,7 +255,7 @@ document.addEventListener("DOMContentLoaded", () => {
           changePage(pageId);
         } else if (values.length === 0) {
           if (componentId === "fi" && !todosFeitos) {
-            showNotification("Preencha pelo menos uma linha completa.");
+            showNotification("Não repita valores na coluna esquerda");
           } else {
             showNotification("Você não digitou nenhum dado.");
           }
@@ -338,13 +338,16 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function formatarInput() {
+  document.querySelectorAll(".fi-input").forEach((inputField) => {
+    inputField.addEventListener("input", (e) => {
+      novaLinha();
+    });
+  });
+
   document.querySelectorAll(".fi-input.fi-min").forEach((inputField) => {
     inputField.addEventListener("input", (e) => {
       if (Number(inputField.value) < 1 && inputField.value !== "") {
         inputField.value = 1;
-      }
-      if (inputField.id === `cell-${tablePosition}`) {
-        novaLinha();
       }
     });
   });
