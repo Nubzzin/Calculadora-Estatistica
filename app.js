@@ -74,40 +74,6 @@ function removerLinha() {
   }
 }
 
-// function reiniciarTasks() {
-//   document.querySelectorAll(".task").forEach((task) => {
-//     task.classList.remove("done");
-//   });
-//   informacoes = [];
-// }
-
-// function reiniciar() {
-//   // reiniciarTasks();
-//   if (document.querySelector("#unidadeInput").value === "") {
-//     tipoUnidade = "Unidade";
-//   }
-//   document.querySelector(
-//     "#dataEntries",
-//   ).innerHTML = `<tr> <th colspan="3" class="unidade-texto">${tipoUnidade}</th> </tr><tr id="row-placeholder"><td></td><td></td><td></td></tr>`;
-//   document.querySelector(
-//     "#dataEntriesFi",
-//   ).innerHTML = `<tr> <th class="unidade-texto">${tipoUnidade}</th> <th>Fi</th> </tr> <tr> <td> <input type="number" class="centered-input fi-input" id="cell-0" placeholder="0" /> </td> <td> <input type="number" class="centered-input fi-input fi-min" id="cell-1" placeholder="..." min="1" /> </td> </tr>`;
-//   document.querySelectorAll(".fi-input.fi-min").forEach((inputField) => {
-//     inputField.addEventListener("input", (e) => {
-//       if (Number(inputField.value) < 1 && inputField.value !== "") {
-//         inputField.value = 1;
-//       }
-//     });
-//   });
-//   values = [];
-//   placeholderSize = 3;
-//   t = 0;
-//   console.log(values);
-//   console.log(informacoes);
-//   formatarInput();
-//   changePage("dados");
-// }
-
 function mudarComponente(componenteId) {
   document.querySelectorAll(".component").forEach((component) => {
     component.classList.remove("active");
@@ -204,11 +170,11 @@ function changePage(pageId) {
       desvioPadrao(variancia(values)),
       agrupamentoDiscreto(values),
     );
-    if (cv) {
+    if (isFinite(cv)) {
       result.innerText = cv;
       result.innerText += "%";
     } else {
-      result.innerText = "Não Possui";
+      result.innerText = "Não Possui/Indefinido";
     }
     result.parentElement.classList.add("active");
   }
@@ -247,7 +213,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (pageId === "resultados") {
         lerTabela();
         lerTasks();
-        desenharGrafico(values);
         todosFeitos = true;
         document.querySelectorAll(".fi-input").forEach((input) => {
           if (!input.value) {
@@ -256,6 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         if (informacoes.length > 0 && values.length > 0) {
           values.sort((a, b) => a - b);
+          desenharGrafico(values);
           changePage(pageId);
         } else if (values.length === 0) {
           if (componentId === "fi" && !todosFeitos) {

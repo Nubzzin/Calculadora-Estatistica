@@ -74,9 +74,7 @@ function desvioPadrao(variancia) {
 }
 
 function coeficienteVariacao(desvioPadrao, agrupamentoDiscreto) {
-  return (
-    Math.round(((100 * desvioPadrao) / agrupamentoDiscreto[1]) * 100) / 100
-  );
+  return (100 * desvioPadrao) / agrupamentoDiscreto[1];
 }
 
 function converterFiToTabelaValues(valores) {

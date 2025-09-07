@@ -6,8 +6,11 @@ function desenharGrafico(values) {
     mapa[x] = (mapa[x] || 0) + 1;
   });
 
-  const labels = Object.keys(mapa);
-  const data = Object.values(mapa);
+  const labels = Object.keys(mapa)
+    .map(Number)
+    .sort((a, b) => a - b);
+
+  const data = labels.map((label) => mapa[label]);
 
   const ctx = document.getElementById("myChart");
 
