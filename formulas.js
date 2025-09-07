@@ -88,15 +88,15 @@ function converterFiToTabelaValues(valores) {
         resultado.push(valores[i]);
       }
     }
-    // resultado.forEach((x) => {
-    //   mapa[x] = (mapa[x] || 0) + 1;
-    // });
-    // console.log(resultado);
-    // for (let key in mapa) {
-    //   if (mapa[key] > 1) {
-    //     return [];
-    //   }
-    // }
+  }
+  resultado.forEach((x) => {
+    mapa[x] = (mapa[x] || 0) + 1;
+  });
+  for (let key in mapa) {
+    if (mapa[key] > 1) {
+      repetida = true;
+      return [];
+    }
   }
   return resultado;
 }
@@ -117,8 +117,8 @@ function converterTabelaToFiValues(valores) {
 }
 
 // Testes
-let valores = [1, 1, 3, 2, 4, 4];
-console.log("Valores:", valores);
+// let valores = [1, 1, 3, 2, 4, 4];
+// console.log("Valores:", valores);
 // console.log("Média:", media(valores));
 // console.log("Mediana:", mediana(valores));
 // console.log("Moda:", moda(valores));

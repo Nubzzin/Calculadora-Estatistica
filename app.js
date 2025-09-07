@@ -6,6 +6,7 @@ let pageId = "dados";
 let componentId = "tabela";
 let tipoUnidade = "Unidade";
 let tablePosition = 1;
+let repetida = false;
 
 function lerTabela() {
   values = [];
@@ -258,7 +259,13 @@ document.addEventListener("DOMContentLoaded", () => {
           changePage(pageId);
         } else if (values.length === 0) {
           if (componentId === "fi" && !todosFeitos) {
-            showNotification("Complete pelo menos uma linha.");
+            if (repetida) {
+              showNotification(
+                "Valores repetidos encontrados na coluna esquerda.",
+              );
+            } else {
+              showNotification("Complete pelo menos uma linha.");
+            }
           } else {
             showNotification("Você não digitou nenhum dado.");
           }
