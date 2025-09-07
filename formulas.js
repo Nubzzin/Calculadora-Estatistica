@@ -83,9 +83,7 @@ function converterFiToTabelaValues(valores) {
   for (let i = 0; i < valores.length; i += 2) {
     if (valores[i] !== 0) mapa[valores[i]] = (mapa[valores[i]] || 0) + 1;
     for (let j = 0; j < valores[i + 1]; j++) {
-      if (valores[i] !== 0) {
-        resultado.push(valores[i]);
-      }
+      resultado.push(valores[i]);
     }
   }
   for (let key in mapa) {

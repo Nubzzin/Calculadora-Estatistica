@@ -15,9 +15,10 @@ function lerTabela() {
     let rows = table.querySelectorAll("tr");
     rows.forEach((row) => {
       let inputs = row.querySelectorAll("input");
-      let rowData = [];
       inputs.forEach((input) => {
-        values.push(Number(input.value));
+        if (input.value !== "") {
+          values.push(Number(input.value));
+        }
       });
     });
     values = converterFiToTabelaValues(values);
@@ -170,7 +171,10 @@ function changePage(pageId) {
       desvioPadrao(variancia(values)),
       agrupamentoDiscreto(values),
     );
-    if (isFinite(cv)) {
+    let tem3maisDecimal = Math.abs(cv * 100 - Math.round(cv * 100)) > 0;
+    console.log(cv);
+    cv = Math.round(cv * 100) / 100;
+    if (isFinite(cv) && cv > 0) {
       result.innerText = cv;
       result.innerText += "%";
     } else {
