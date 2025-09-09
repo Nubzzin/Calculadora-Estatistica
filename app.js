@@ -89,13 +89,26 @@ function mudarComponente(componenteId) {
     .querySelector(`button[data-component="${componenteId}"]`)
     .classList.add("mini-button");
   habilitarCzuberSeClasse();
+  pageId = "dados";
+  changePage(pageId);
 }
 
 // Função para mudar páginas
 function changePage(pageId) {
-  if (tipoUnidade === "Unidade") {
+  if (pageId !== "resultados" && tipoUnidade === "Unidade") {
     tipoUnidade = "u";
   }
+
+  if (pageId === "decisao") {
+    document.querySelectorAll(".task").forEach((page) => {
+      page.classList.remove("done");
+    });
+    document.querySelector("#unidadeInput").value = "";
+    tipoUnidade = "Unidade";
+    apagarTabela();
+    apagarTabelaFi();
+  }
+
   // Esconder todas as páginas
   document.querySelectorAll(".page").forEach((page) => {
     page.classList.remove("active");
@@ -123,18 +136,39 @@ function changePage(pageId) {
         result.innerText = "Amodal";
         break;
       case 1:
-        result.innerText = "Unimodal: ";
+        result.innerText = "Unimodal";
         break;
       case 2:
-        result.innerText = "Bimodal: ";
+        result.innerText = "Bimodal";
         break;
       case 3:
-        result.innerText = "Trimodal: ";
+        result.innerText = "Trimodal";
+        break;
+      case 4:
+        result.innerText = "Tetramodal";
+        break;
+      case 5:
+        result.innerText = "Pentamodal";
+        break;
+      case 6:
+        result.innerText = "Hexamodal";
+        break;
+      case 7:
+        result.innerText = "Heptamodal";
+        break;
+      case 8:
+        result.innerText = "Octomodal";
+        break;
+      case 9:
+        result.innerText = "Enneamodal";
+        break;
+      case 10:
+        result.innerText = "Decamodal";
         break;
       default:
-        result.innerText = "Multimodal: ";
+        result.innerText = "Polimodal";
     }
-    result.innerText += " " + modaV[0];
+    result.innerText += ": " + modaV[0];
     result.parentElement.classList.add("active");
   }
   if (informacoes.find((x) => x === "moda-czuber")) {
@@ -291,7 +325,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let inputTabela = document.querySelector("#dataInput");
   inputTabela.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && inputTabela.value !== "") {
       let currentValue;
       try {
         currentValue = Number(inputTabela.value);
@@ -345,13 +379,9 @@ formatarInput();
 
 function habilitarCzuberSeClasse() {
   if (componentId !== "classes") {
-    document
-      .querySelector(".task[data='moda-czuber']")
-      .classList.add("naopode");
+    document.querySelector(".task[data='moda-czuber']").style.display = "none";
   } else {
-    document
-      .querySelector(".task[data='moda-czuber']")
-      .classList.remove("naopode");
+    document.querySelector(".task[data='moda-czuber']").style.display = "block";
   }
 }
 habilitarCzuberSeClasse();
@@ -377,9 +407,7 @@ document.querySelector("#remover-linha").addEventListener("click", () => {
   removerLinha();
 });
 
-document.querySelector("#apagar-tabela").addEventListener("click", () => {
-  placeholderSize = 3;
-  t = 0;
+function apagarTabela() {
   document.querySelector("#dataEntries").innerHTML = `
     <tr>
       <th colspan="3" class="unidade-texto">
@@ -392,6 +420,40 @@ document.querySelector("#apagar-tabela").addEventListener("click", () => {
       <td></td>
     </tr>
   `;
+}
+function apagarTabelaFi() {
+  document.querySelector("#dataEntriesFi").innerHTML = `
+  <tr>
+    <th class="unidade-texto">Unidade</th>
+    <th>Fi</th>
+  </tr>
+  <tr><th colspan="2" style="padding: 0px; background-color: #80c888;">Linhas incompletas serão ignoradas</th></tr>
+  <tr>
+    <td>
+      <input
+        type="number"
+        class="centered-input fi-input"
+        id="cell-0"
+        placeholder="..."
+      />
+    </td>
+    <td>
+      <input
+        type="number"
+        class="centered-input fi-input fi-min"
+        id="cell-1"
+        placeholder="..."
+        min="1"
+      />
+    </td>
+  </tr>
+  `;
+  formatarInput();
+}
+document.querySelector("#apagar-tabela").addEventListener("click", () => {
+  placeholderSize = 3;
+  t = 0;
+  apagarTabela();
 });
 
 document.querySelectorAll(".task").forEach((task) => {

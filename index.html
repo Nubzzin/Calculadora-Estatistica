@@ -17,14 +17,81 @@
 
       <div class="main-container">
         <main class="content-area">
+          <!-- Pagina decisao entre discreto e classes -->
+          <div class="page active" id="decisao">
+            <div class="card" style="margin-top: 10%; min-height: 0px;">
+              <h2 style="text-align: center;">Qual agrupamento deseja utilizar?</h2>
+              <div class="mode-buttons">
+                <button class="btn-primary" data-page="discreto">Agrupamento Discreto</button>
+                <button class="btn-primary" data-component="classes">Agrupamento por Classes</button>
+              </div>
+            </div>
+          </div>
+          <!-- Pagina discretos -->
+          <div class="page" id="discreto">
+            <div class="card"  style="margin-top: 10%; min-height: 0px;">
+              <h2 class="" style="text-align: center;">Como deseja inserir os dados?</h2>
+              <div class="mode-buttons">
+                <button class="btn-primary" data-component="tabela">Digitar Dados</button>
+                <button class="btn-primary" data-component="fi">Tabela de Dados</button>
+              </div>
+            </div>
+          </div>
+
           <!-- Página Dados -->
-          <div class="page active" id="dados">
+
+          <div class="page" id="dados">
             <div class="cards-row">
               <div class="left-column">
+                <button class="btn-secondary" data-page="decisao">Voltar</button>
                 <div class="card">
-                  <h3>Opções de Entrada</h3>
+                  <!-- <h3>Opções de Entrada</h3> -->
+                  <div style="margin-bottom: 30px;">
+                    <h3 style="display: inline;"> Digite a unidade de medida:</h3>
+                    <input
+                      id="unidadeInput"
+                      type="text"
+                      placeholder="Exemplos: Cm | Km/h | mm | °C | ..."
+                      class="centered-input"
+                      style="
+                        display: inline;
+                        margin-bottom: 10px;
+                        height: 35px;
+                        font-size: 15px;
+                      "
+                    />
+                  </div>
+                  <div class="tabela component active">
+                    <div>
+                      <h3 style="display: inline">Entrada:</h3>
+                    </div>
+                    <p>Garanta que pressionou "Enter" após cada dado.</p>
+                    <div class="centered-container" style="margin-top: 5px">
+                      <input
+                        type="number"
+                        id="dataInput"
+                        class="centered-input"
+                        placeholder="Digite um número"
+                        style="width: 100%"
+                      />
+                      <button
+                        id="apagar-tabela"
+                        class="btn-secondary"
+                        style="
+                          height: 45px;
+                          background-color: #ff7161;
+                          color: white;
+                          font-weight: 800;
+                          margin: 0px;
+                          margin-left: 10px;
+                        "
+                      >
+                        Apagar dados
+                      </button>
+                    </div>
+                  </div>
                   <div class="mode-buttons">
-                    <button
+                    <!-- <button
                       class="btn-secondary mini-button"
                       data-component="tabela"
                     >
@@ -35,7 +102,7 @@
                     </button>
                     <button class="btn-secondary" data-component="classes">
                       Classes
-                    </button>
+                    </button> -->
                     <button
                       id="nova-linha"
                       class="fi component btn-secondary"
@@ -83,41 +150,12 @@
                       Remover Linha -
                     </button>
                   </div>
-                  <div class="tabela component active">
-                    <div>
-                      <h3 style="display: inline">Entrada:</h3>
-                    </div>
-                    <p>Garanta que pressionou "Enter" após cada dado.</p>
-                    <div class="centered-container" style="margin-top: 5px">
-                      <input
-                        type="number"
-                        id="dataInput"
-                        class="centered-input"
-                        placeholder="Digite um número"
-                        style="width: 100%"
-                      />
-                      <button
-                        id="apagar-tabela"
-                        class="btn-secondary"
-                        style="
-                          height: 45px;
-                          background-color: #ff7161;
-                          color: white;
-                          font-weight: 800;
-                          margin: 0px;
-                          margin-left: 10px;
-                        "
-                      >
-                        Apagar dados
-                      </button>
-                    </div>
-                  </div>
                 </div>
 
                 <div class="card bottom">
                   <div>
                     <h3 style="display: inline">Opções de Cálculo:</h3>
-                    <input
+                    <!-- <input
                       id="unidadeInput"
                       type="text"
                       placeholder="Unidade de Medida"
@@ -129,7 +167,7 @@
                         height: 35px;
                         font-size: 15px;
                       "
-                    />
+                    /> -->
                   </div>
                   <div class="task-container">
                     <div class="task" data="media">Média</div>
@@ -268,7 +306,7 @@
                         <span>Moda Bruta: </span>
                         <span id="resultado-moda">—</span>
                       </div>
-                      <div class="result-item">
+                      <div class="classes component result-item">
                         <span>Moda de Czuber: </span>
                         <span id="resultado-moda-czuber">—</span>
                       </div>
@@ -296,7 +334,7 @@
 
                     <div class="action-buttons" style="margin-top: 20px">
                       <button class="btn-secondary" data-page="dados">
-                        Voltar ao início
+                        Voltar para calculadora 
                       </button>
                     </div>
                   </div>
@@ -311,10 +349,6 @@
               </div>
         </main>
       </div>
-
-      <footer class="app-footer">
-        <p>@Calculadora</p>
-      </footer>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
