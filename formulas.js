@@ -1,17 +1,58 @@
 function media(valores) {
-  return (
-    Math.round(
-      (valores.reduce((soma, atual) => (soma += atual), 0) / valores.length) *
-        100,
-    ) / 100
-  );
+  if (componentId !== "classes") {
+    return (
+      Math.round(
+        (valores.reduce((soma, atual) => (soma += atual), 0) / valores.length) *
+          100,
+      ) / 100
+    );
+  } else {
+    let soma = 0;
+    let fi = 0;
+    for (let linha in valores) {
+      let pontoMedio = (valores[linha].li + valores[linha].ls) / 2;
+      soma += pontoMedio * valores[linha].fi;
+      fi += valores[linha].fi;
+    }
+    let resultado = soma / fi;
+    return Math.round(resultado * 100) / 100;
+  }
 }
 
 function mediana(valores) {
-  if (valores.length % 2 == 0) {
-    return (valores[valores.length / 2 - 1] + valores[valores.length / 2]) / 2;
+  if (componentId !== "classes") {
+    if (valores.length % 2 == 0) {
+      return (
+        (valores[valores.length / 2 - 1] + valores[valores.length / 2]) / 2
+      );
+    } else {
+      return valores[(valores.length - 1) / 2];
+    }
   } else {
-    return valores[(valores.length - 1) / 2];
+    let n = valores.reduce((acc, curr) => acc + curr.fi, 0);
+    let metade = n / 2;
+
+    let acumulada = 0;
+    let classeMediana = null;
+    let Fa = 0;
+
+    for (let i = 0; i < valores.length; i++) {
+      acumulada += valores[i].fi;
+      if (acumulada >= metade) {
+        classeMediana = valores[i];
+        Fa = acumulada - valores[i].fi;
+        break;
+      }
+    }
+    if (!classeMediana) return null;
+
+    let Li = classeMediana.li;
+    let fm = classeMediana.fi;
+    let h = classeMediana.ls - classeMediana.li + 1;
+
+    let mediana = Li + ((metade - Fa) / fm) * h;
+    console.log(mediana);
+    return mediana;
   }
 }
 
@@ -35,6 +76,42 @@ function moda(valores) {
   return modas;
 }
 
+function modaBruta(valores) {
+  if (!Array.isArray(valores) || valores.length === 0) return [[], 0];
+
+  let maxFi = Math.max(...valores.map((v) => v.fi));
+
+  let modas = [];
+  for (let i = 0; i < valores.length; i++) {
+    if (valores[i].fi === maxFi) {
+      modas.push([valores[i].li, valores[i].ls]);
+    }
+  }
+
+  return [modas, modas.length];
+}
+
+function modaCzuber(valores) {
+  let maxFi = Math.max(...valores.map((v) => v.fi));
+
+  let classesModais = valores.filter((v) => v.fi === maxFi);
+
+  if (classesModais.length > 1) {
+    return ["Não é possível aplicar Czuber", 0];
+  }
+
+  let i = valores.findIndex((v) => v.fi === maxFi);
+  let Li = valores[i].li;
+  let fm = valores[i].fi;
+  let h = valores[i].ls - valores[i].li;
+  let fAnterior = i > 0 ? valores[i - 1].fi : 0;
+  let fPosterior = i < valores.length - 1 ? valores[i + 1].fi : 0;
+
+  let Mo = Li + ((fm - fAnterior) / (fm - fAnterior + (fm - fPosterior))) * h;
+
+  return [[Mo], 1];
+}
+
 function agrupamentoDiscreto(valores) {
   let mapa = {};
   let fi = 0;
@@ -53,28 +130,76 @@ function agrupamentoDiscreto(valores) {
 }
 
 function variancia(valores) {
-  let mapa = {};
-  let ad = media(valores);
-  valores.forEach((x) => {
-    mapa[x] = (mapa[x] || 0) + 1;
-  });
-  let soma = [];
-  for (let key in mapa) {
-    soma.push((key - ad) ** 2 * mapa[key]);
+  if (componentId !== "classes") {
+    let mapa = {};
+    let ad = media(valores);
+    valores.forEach((x) => {
+      mapa[x] = (mapa[x] || 0) + 1;
+    });
+    let soma = [];
+    for (let key in mapa) {
+      soma.push((key - ad) ** 2 * mapa[key]);
+    }
+    let resultado = 0;
+    soma.forEach((x) => {
+      resultado += x;
+    });
+    return Math.round(Number(resultado / (valores.length - 1)) * 100) / 100;
+  } else {
+    let somaFi = 0;
+    let somaXiFi = 0;
+
+    for (let v of valores) {
+      let xi = (v.li + v.ls) / 2;
+      somaXiFi += xi * v.fi;
+      somaFi += v.fi;
+    }
+
+    let media = somaXiFi / somaFi;
+
+    let somaDesvios = 0;
+    for (let v of valores) {
+      let xi = (v.li + v.ls) / 2;
+      somaDesvios += v.fi * Math.pow(xi - media, 2);
+    }
+
+    let variancia = somaDesvios / (somaFi - 1);
+
+    return Math.round(variancia * 100) / 100;
   }
-  let resultado = 0;
-  soma.forEach((x) => {
-    resultado += x;
-  });
-  return Math.round(Number(resultado / (valores.length - 1)) * 100) / 100;
 }
 
 function desvioPadrao(variancia) {
   return Math.round(Math.sqrt(variancia) * 100) / 100;
 }
 
-function coeficienteVariacao(desvioPadrao, agrupamentoDiscreto) {
-  return (100 * desvioPadrao) / agrupamentoDiscreto[1];
+function coeficienteVariacao(desvioPadrao, agrupamentoDiscreto, valores) {
+  if (componentId !== "classes") {
+    return (100 * desvioPadrao) / agrupamentoDiscreto[1];
+  } else {
+    let somaFi = 0;
+    let somaXiFi = 0;
+
+    for (let v of valores) {
+      let xi = (v.li + v.ls) / 2;
+      somaXiFi += xi * v.fi;
+      somaFi += v.fi;
+    }
+
+    let media = somaXiFi / somaFi;
+
+    let somaDesvios = 0;
+    for (let v of valores) {
+      let xi = (v.li + v.ls) / 2;
+      somaDesvios += v.fi * Math.pow(xi - media, 2);
+    }
+
+    let desvioPadrao = Math.sqrt(somaDesvios / (somaFi - 1));
+
+    let CV = (desvioPadrao / media) * 100;
+
+    return CV;
+  }
 }
 
 function converterFiToTabelaValues(valores) {

@@ -6,7 +6,43 @@ let pageId = "dados";
 let componentId = "tabela";
 let tipoUnidade = "Unidade";
 let tablePosition = 1;
+let classPosition = 2;
 let repetida = false;
+let diff = 0;
+
+// Função de exemplo para mostrar como adicionar interatividade
+function showNotification(message) {
+  // Criar elemento de notificação
+  const notification = document.createElement("div");
+  notification.className = "notification";
+  notification.textContent = message;
+  notification.style.cssText = `
+    position: fixed;
+    bottom: 50%; /* raised a little higher than 20px */
+    left: 61.1%;
+    transform: translateX(-50%);
+    background-color: #e74c3c;
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+    font-weight: 800;
+  `;
+  // Adicionar à página
+  document.body.appendChild(notification);
+
+  // Remover após 3 segundos
+  setTimeout(() => {
+    notification.remove();
+  }, 3000);
+}
+
+function calcDiff() {
+  diff =
+    document.querySelector(`#class-cell-1`).value -
+    document.querySelector(`#class-cell-0`).value;
+}
 
 function lerTabela() {
   values = [];
@@ -36,6 +72,34 @@ function lerTabela() {
     }
     values.shift();
     console.log("Lendo Tabela:", values);
+  } else if (componentId === "classes") {
+    let table = document.querySelector("#dataEntriesClasses");
+    if (
+      table.rows[2].cells[0].querySelector("input").value === "" ||
+      table.rows[2].cells[1].querySelector("input").value === ""
+    ) {
+      showNotification("Preencha as colunas Li e Ls.");
+      return [];
+    } else if (
+      table.rows[2].cells[0].querySelector("input").value ===
+      table.rows[2].cells[1].querySelector("input").value
+    ) {
+      showNotification("As colunas Li e Ls não podem ser iguais");
+      repetida = true;
+      return [];
+    }
+    let rows = table.rows;
+    for (let row of rows) {
+      let inputs = row.querySelectorAll("input");
+      values.push({
+        li: Number(inputs[0]?.value),
+        ls: Number(inputs[1]?.value),
+        fi: Number(inputs[2]?.value || 1),
+      });
+    }
+    values.shift();
+    values.shift();
+    console.log("Lendo Classes: ", values);
   }
 }
 
@@ -75,6 +139,64 @@ function removerLinha() {
   }
 }
 
+function novaLinhaClasse() {
+  let table = document.querySelector("#dataEntriesClasses");
+  if (
+    table.rows[2].cells[0].querySelector("input").value === "" ||
+    table.rows[2].cells[1].querySelector("input").value === ""
+  ) {
+    showNotification(
+      "Preencha as colunas Li e Ls antes de adicionar novas linhas",
+    );
+    return;
+  } else if (
+    table.rows[2].cells[0].querySelector("input").value ===
+    table.rows[2].cells[1].querySelector("input").value
+  ) {
+    showNotification("As colunas Li e Ls não podem ser iguais");
+    return;
+  }
+  table.rows[2].cells[0].querySelector("input").classList.add("disabled");
+  table.rows[2].cells[1].querySelector("input").classList.add("disabled");
+  let row = table.insertRow(-1);
+  let cell = row.insertCell();
+  calcDiff();
+  classPosition++;
+  cell.innerHTML = `<input type="number" class="centered-input class-input disabled" id="class-cell-${classPosition}" placeholder="..." value="${
+    document.querySelector(`#class-cell-${classPosition - 2}`).value
+  }">`;
+  cell = row.insertCell();
+  classPosition++;
+  cell.innerHTML = `<input type="number" class="centered-input class-input class-min disabled" id="class-cell-${classPosition}" placeholder="..." value="${
+    Number(document.querySelector(`#class-cell-${classPosition - 1}`).value) +
+    diff
+  }">`;
+  cell = row.insertCell();
+  classPosition++;
+  cell.innerHTML = `<input type="number" class="centered-input class-input class-min" id="class-cell-${classPosition}" placeholder="1" min="1">`;
+  formatarInput();
+}
+
+function removerLinhaClasse() {
+  let table = document.querySelector("#dataEntriesClasses");
+  if (table.rows.length > 3) {
+    table.deleteRow(-1);
+    classPosition -= 3;
+  } else {
+    for (let i = 0; i < 3; i++) {
+      table.rows[2].cells[i].querySelector("input").value = "";
+    }
+  }
+
+  if (table.rows.length === 3) {
+    for (let i = 0; i < 2; i++) {
+      table.rows[2].cells[i]
+        .querySelector("input")
+        .classList.remove("disabled");
+    }
+  }
+}
+
 function mudarComponente(componenteId) {
   document.querySelectorAll(".component").forEach((component) => {
     component.classList.remove("active");
@@ -93,6 +215,48 @@ function mudarComponente(componenteId) {
   changePage(pageId);
 }
 
+function nomeModa(value) {
+  let result = "";
+  switch (value) {
+    case 0:
+      result = "Amodal";
+      break;
+    case 1:
+      result = "Unimodal: ";
+      break;
+    case 2:
+      result = "Bimodal: ";
+      break;
+    case 3:
+      result = "Trimodal: ";
+      break;
+    case 4:
+      result = "Tetramodal: ";
+      break;
+    case 5:
+      result = "Pentamodal: ";
+      break;
+    case 6:
+      result = "Hexamodal: ";
+      break;
+    case 7:
+      result = "Heptamodal: ";
+      break;
+    case 8:
+      result = "Octomodal: ";
+      break;
+    case 9:
+      result = "Enneamodal: ";
+      break;
+    case 10:
+      result = "Decamodal: ";
+      break;
+    default:
+      result = "Polimodal: ";
+  }
+  return result;
+}
+
 // Função para mudar páginas
 function changePage(pageId) {
   if (pageId !== "resultados" && tipoUnidade === "Unidade") {
@@ -107,6 +271,7 @@ function changePage(pageId) {
     tipoUnidade = "Unidade";
     apagarTabela();
     apagarTabelaFi();
+    apagarTabelaClasses();
   }
 
   // Esconder todas as páginas
@@ -131,52 +296,29 @@ function changePage(pageId) {
   if (informacoes.find((x) => x === "moda")) {
     let modaV = moda(values);
     result = document.querySelector("#resultado-moda");
-    switch (modaV[0].length) {
-      case 0:
-        result.innerText = "Amodal";
-        break;
-      case 1:
-        result.innerText = "Unimodal";
-        break;
-      case 2:
-        result.innerText = "Bimodal";
-        break;
-      case 3:
-        result.innerText = "Trimodal";
-        break;
-      case 4:
-        result.innerText = "Tetramodal";
-        break;
-      case 5:
-        result.innerText = "Pentamodal";
-        break;
-      case 6:
-        result.innerText = "Hexamodal";
-        break;
-      case 7:
-        result.innerText = "Heptamodal";
-        break;
-      case 8:
-        result.innerText = "Octomodal";
-        break;
-      case 9:
-        result.innerText = "Enneamodal";
-        break;
-      case 10:
-        result.innerText = "Decamodal";
-        break;
-      default:
-        result.innerText = "Polimodal";
+    result.innerText = nomeModa(modaV[0].length);
+    result.innerText += " " + modaV[0];
+    result.parentElement.classList.add("active");
+  }
+  if (informacoes.find((x) => x === "moda-bruta")) {
+    let modaV = modaBruta(values);
+    result = document.querySelector("#resultado-moda-bruta");
+    result.innerText = nomeModa(modaV[0].length);
+    // result.innerText += " " + modaV[0];
+    for (let i = 0; i < modaV[0].length; i++) {
+      result.innerText += " (" + modaV[0][i][0] + "-" + modaV[0][i][1] + ")";
     }
-    result.innerText += ": " + modaV[0];
     result.parentElement.classList.add("active");
   }
   if (informacoes.find((x) => x === "moda-czuber")) {
+    let modaV = modaCzuber(values);
     result = document.querySelector("#resultado-moda-czuber");
     if (componentId === "classes") {
-      // result.innerText = modaCzuber(values);
-      // result.innerText += " " + tipoUnidade;
-      result.innerText = "A fazer";
+      if (modaV[1] === 0) {
+        result.innerText = "Não é possível aplicar Czuber";
+      } else {
+        result.innerText = "Moda: " + Math.round(modaV[0] * 100) / 100;
+      }
     } else {
       result.innerText = "Apenas para classes";
     }
@@ -184,7 +326,7 @@ function changePage(pageId) {
   }
   if (informacoes.find((x) => x === "mediana")) {
     result = document.querySelector("#resultado-mediana");
-    result.innerText = mediana(values);
+    result.innerText = Math.round(mediana(values) * 100) / 100;
     result.innerText += " " + tipoUnidade;
     result.parentElement.classList.add("active");
   }
@@ -204,6 +346,7 @@ function changePage(pageId) {
     let cv = coeficienteVariacao(
       desvioPadrao(variancia(values)),
       agrupamentoDiscreto(values),
+      values,
     );
     let tem3maisDecimal = Math.abs(cv * 100 - Math.round(cv * 100)) > 0;
     console.log(cv);
@@ -252,14 +395,25 @@ document.addEventListener("DOMContentLoaded", () => {
         lerTabela();
         lerTasks();
         todosFeitos = true;
-        document.querySelectorAll(".fi-input").forEach((input) => {
-          if (!input.value) {
-            todosFeitos = false;
-          }
-        });
+        if (componentId === "fi") {
+          document.querySelectorAll(".fi-input").forEach((input) => {
+            if (!input.value) {
+              todosFeitos = false;
+            }
+          });
+        }
+        if (componentId === "classes") {
+          document.querySelectorAll(".class-input").forEach((input) => {
+            if (!input.value) {
+              todosFeitos = false;
+            }
+          });
+        }
         if (informacoes.length > 0 && values.length > 0) {
           values.sort((a, b) => a - b);
-          desenharGrafico(values);
+          if (componentId !== "classes") {
+            desenharGrafico(values);
+          }
           changePage(pageId);
         } else if (values.length === 0) {
           if (componentId === "fi" && !todosFeitos) {
@@ -268,7 +422,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Valores repetidos encontrados na coluna esquerda.",
               );
             } else {
-              showNotification("Complete pelo menos uma linha.");
+              showNotification("Preencha pelo menos uma linha.");
+            }
+          } else if (componentId === "classes" && !todosFeitos) {
+            if (repetida) {
+              showNotification("As colunas Li e Ls não podem ser iguais.");
+            } else {
+              showNotification("Preencha as colunas Li e Ls.");
             }
           } else {
             showNotification("Você não digitou nenhum dado.");
@@ -293,35 +453,6 @@ document.addEventListener("DOMContentLoaded", () => {
       mudarComponente(componentId);
     });
   });
-
-  // Função de exemplo para mostrar como adicionar interatividade
-  function showNotification(message) {
-    // Criar elemento de notificação
-    const notification = document.createElement("div");
-    notification.className = "notification";
-    notification.textContent = message;
-    notification.style.cssText = `
-      position: fixed;
-      bottom: 50%; /* raised a little higher than 20px */
-      left: 61.1%;
-      transform: translateX(-50%);
-      background-color: #e74c3c;
-      color: white;
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-      z-index: 1000;
-      font-weight: 800;
-    `;
-
-    // Adicionar à página
-    document.body.appendChild(notification);
-
-    // Remover após 3 segundos
-    setTimeout(() => {
-      notification.remove();
-    }, 3000);
-  }
 
   let inputTabela = document.querySelector("#dataInput");
   inputTabela.addEventListener("keypress", (e) => {
@@ -353,21 +484,29 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function formatarInput() {
-  document.querySelectorAll(".fi-input").forEach((inputField) => {
-    inputField.addEventListener("keypress", (e) => {
-      if (
-        (inputField.id === `cell-${tablePosition}` ||
-          inputField.id === `cell-${tablePosition - 1}`) &&
-        e.key !== "Enter" &&
-        e.key !== "Backspace" &&
-        !isNaN(Number(e.key))
-      ) {
-        novaLinha();
+  let inputs = document
+    .querySelectorAll(".fi-input")
+    .forEach((inputField, index) => {
+      inputField.addEventListener("keydown", (e) => {
+        if (
+          (inputField.id === `cell-${tablePosition}` ||
+            inputField.id === `cell-${tablePosition - 1}`) &&
+          !isNaN(Number(e.key))
+        ) {
+          novaLinha();
+        }
+      });
+    });
+
+  document.querySelectorAll(".fi-input.fi-min").forEach((inputField) => {
+    inputField.addEventListener("input", (e) => {
+      if (Number(inputField.value) < 1 && inputField.value !== "") {
+        inputField.value = 1;
       }
     });
   });
 
-  document.querySelectorAll(".fi-input.fi-min").forEach((inputField) => {
+  document.querySelectorAll(".class-input.class-min").forEach((inputField) => {
     inputField.addEventListener("input", (e) => {
       if (Number(inputField.value) < 1 && inputField.value !== "") {
         inputField.value = 1;
@@ -380,8 +519,12 @@ formatarInput();
 function habilitarCzuberSeClasse() {
   if (componentId !== "classes") {
     document.querySelector(".task[data='moda-czuber']").style.display = "none";
+    document.querySelector(".task[data='moda-bruta']").style.display = "none";
+    document.querySelector(".task[data='moda']").style.display = "block";
   } else {
     document.querySelector(".task[data='moda-czuber']").style.display = "block";
+    document.querySelector(".task[data='moda-bruta']").style.display = "block";
+    document.querySelector(".task[data='moda']").style.display = "none";
   }
 }
 habilitarCzuberSeClasse();
@@ -407,6 +550,16 @@ document.querySelector("#remover-linha").addEventListener("click", () => {
   removerLinha();
 });
 
+document.querySelector("#nova-linha-classes").addEventListener("click", () => {
+  novaLinhaClasse();
+});
+
+document
+  .querySelector("#remover-linha-classes")
+  .addEventListener("click", () => {
+    removerLinhaClasse();
+  });
+
 function apagarTabela() {
   document.querySelector("#dataEntries").innerHTML = `
     <tr>
@@ -420,7 +573,9 @@ function apagarTabela() {
       <td></td>
     </tr>
   `;
+  placeholderSize = 3;
 }
+
 function apagarTabelaFi() {
   document.querySelector("#dataEntriesFi").innerHTML = `
   <tr>
@@ -448,13 +603,62 @@ function apagarTabelaFi() {
     </td>
   </tr>
   `;
+  tablePosition = 1;
   formatarInput();
 }
+
+function apagarTabelaClasses() {
+  document.querySelector("#dataEntriesClasses").innerHTML = `
+  <tr>
+    <th colspan="3" class="unidade-texto">Unidade</th>
+  </tr>
+  <tr>
+    <th>Li</th>
+    <th>Ls</th>
+    <th>Fi</th>
+  </tr>
+  <tr>
+    <td>
+      <input
+        type="number"
+        class="centered-input class-input"
+        id="class-cell-0"
+        placeholder="..."
+      />
+    </td>
+    <td>
+      <input
+        type="number"
+        class="centered-input class-input"
+        id="class-cell-1"
+        placeholder="..."
+      />
+    </td>
+    <td>
+      <input
+        type="number"
+        class="centered-input class-input class-min"
+        id="class-cell-2"
+        placeholder="1"
+      />
+    </td>
+  </tr>
+    `;
+  tablePosition = 2;
+  formatarInput();
+}
+
 document.querySelector("#apagar-tabela").addEventListener("click", () => {
   placeholderSize = 3;
   t = 0;
   apagarTabela();
 });
+
+// document
+//   .querySelector("#apagar-tabela-classes")
+//   .addEventListener("click", () => {
+//     apagarTabelaClasses();
+//   });
 
 document.querySelectorAll(".task").forEach((task) => {
   task.addEventListener("click", () => {
