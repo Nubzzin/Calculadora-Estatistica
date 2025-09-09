@@ -413,6 +413,8 @@ document.addEventListener("DOMContentLoaded", () => {
           values.sort((a, b) => a - b);
           if (componentId !== "classes") {
             desenharGrafico(values);
+          } else {
+            desenharGraficoClasses(values);
           }
           changePage(pageId);
         } else if (values.length === 0) {

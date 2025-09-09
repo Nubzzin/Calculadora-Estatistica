@@ -77,3 +77,62 @@ function desenharGrafico(values) {
     },
   });
 }
+
+function desenharGraficoClasses(classes) {
+  const labels = classes.map((c) => `${c.li}–${c.ls}`);
+  const data = classes.map((c) => c.fi);
+
+  const ctx = document.getElementById("myChart");
+
+  if (chartInstance) {
+    chartInstance.destroy();
+  }
+
+  const maxValue = Math.max(...data);
+  const suggestedMax = maxValue + Math.ceil(maxValue * 0.2);
+
+  chartInstance = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "Frequência",
+          data: data,
+          backgroundColor: "rgba(54, 162, 235, 0.6)",
+          borderColor: "rgba(54, 162, 235, 1)",
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: "Histograma de Classes",
+          font: { size: 16, weight: "bold" },
+        },
+      },
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: "Classes",
+          },
+        },
+        y: {
+          beginAtZero: true,
+          suggestedMax: suggestedMax,
+          title: { display: true, text: "Frequência" },
+          ticks: {
+            callback: function (value) {
+              return Number.isInteger(value) ? value : null;
+            },
+          },
+        },
+      },
+    },
+  });
+}
