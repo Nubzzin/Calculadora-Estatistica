@@ -306,12 +306,13 @@ function changePage(pageId) {
     result.innerText = nomeModa(modaV[0].length);
     // result.innerText += " " + modaV[0];
     for (let i = 0; i < modaV[0].length; i++) {
-      result.innerText += " (" + modaV[0][i][0] + "-" + modaV[0][i][1] + ")";
+      result.innerText += " (" + modaV[0][i][0] + " - " + modaV[0][i][1] + ")";
     }
     result.parentElement.classList.add("active");
   }
   if (informacoes.find((x) => x === "moda-czuber")) {
     let modaV = modaCzuber(values);
+    console.log(modaV);
     result = document.querySelector("#resultado-moda-czuber");
     if (componentId === "classes") {
       if (modaV[1] === 0) {

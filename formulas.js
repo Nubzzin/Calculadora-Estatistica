@@ -95,9 +95,10 @@ function modaCzuber(valores) {
   let maxFi = Math.max(...valores.map((v) => v.fi));
 
   let classesModais = valores.filter((v) => v.fi === maxFi);
+  console.log(classesModais);
 
   if (classesModais.length > 1) {
-    return ["Não é possível aplicar Czuber", 0];
+    return [[], 0];
   }
 
   let i = valores.findIndex((v) => v.fi === maxFi);
