@@ -297,7 +297,11 @@ function changePage(pageId) {
     let modaV = moda(values);
     result = document.querySelector("#resultado-moda");
     result.innerText = nomeModa(modaV[0].length);
-    result.innerText += " " + modaV[0];
+    for (let i = 0; i < modaV[0].length - 1; i++) {
+      result.innerText += " " + modaV[0][i] + " |";
+    }
+    result.innerText += " " + modaV[0][modaV[0].length - 1];
+    // result.innerText += " " + modaV[0];
     result.parentElement.classList.add("active");
   }
   if (informacoes.find((x) => x === "moda-bruta")) {
