@@ -212,7 +212,7 @@ function coeficienteVariacao(desvioPadrao, agrupamentoDiscreto, valores) {
 
     let desvioPadrao = Math.sqrt(somaDesvios / (somaFi - 1));
 
-    let CV = (desvioPadrao * 100) / media;
+    let CV = (desvioPadrao * 100) / Math.abs(media);
 
     return CV;
   }
