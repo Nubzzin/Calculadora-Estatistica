@@ -183,7 +183,7 @@ input[type=number] {
 }
 
 .btn-secondary {
-    background-color: #ecf0f1;
+    background-color: #c5c5c5;
     color: #2c3e50;
     border: none;
     padding: 0.5rem 1rem;
@@ -194,7 +194,7 @@ input[type=number] {
 }
 
 .btn-secondary:hover {
-    background-color: #bdc3c7;
+    background-color: #838d93;
 }
 
 .nav-buttons {

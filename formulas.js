@@ -46,7 +46,6 @@ function mediana(valores) {
     let h = classeMediana.ls - classeMediana.li;
 
     let mediana = Li + ((metade - Fa) / fm) * h;
-    console.log(mediana);
     return mediana;
   }
 }
@@ -90,7 +89,6 @@ function modaCzuber(valores) {
   let maxFi = Math.max(...valores.map((v) => v.fi));
 
   let classesModais = valores.filter((v) => v.fi === maxFi);
-  console.log(classesModais);
 
   if (classesModais.length > 1) {
     return [[], 0];

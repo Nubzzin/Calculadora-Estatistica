@@ -174,6 +174,7 @@ function novaLinhaClasse() {
   cell = row.insertCell();
   classPosition++;
   cell.innerHTML = `<input type="number" class="centered-input class-input class-min" id="class-cell-${classPosition}" placeholder="1" min="1">`;
+  document.querySelector(`#class-cell-${classPosition}`).focus();
   formatarInput();
 }
 
@@ -356,7 +357,6 @@ function changePage(pageId) {
         ) * 1000,
       ) / 1000;
     let tem3maisDecimal = Math.abs(cv * 100 - Math.round(cv * 100)) > 0;
-    console.log(cv);
     cv = Math.round(cv * 1000) / 1000;
     if (isFinite(cv) && cv > 0) {
       result.innerText = cv;
@@ -493,19 +493,21 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function formatarInput() {
-  let inputs = document
-    .querySelectorAll(".fi-input")
-    .forEach((inputField, index) => {
-      inputField.addEventListener("keydown", (e) => {
-        if (
-          (inputField.id === `cell-${tablePosition}` ||
-            inputField.id === `cell-${tablePosition - 1}`) &&
-          !isNaN(Number(e.key))
-        ) {
-          novaLinha();
-        }
-      });
+  document.querySelectorAll(".fi-input").forEach((inputField, index) => {
+    inputField.addEventListener("keypress", (e) => {
+      if (
+        (inputField.id === `cell-${tablePosition}` ||
+          inputField.id === `cell-${tablePosition - 1}`) &&
+        !isNaN(Number(e.key))
+      ) {
+        novaLinha();
+      }
+      if (e.key === "Enter") {
+        let inputId = Number(inputField.id.split("-")[1]) + 1;
+        document.querySelector(`#cell-${inputId}`).focus();
+      }
     });
+  });
 
   document.querySelectorAll(".fi-input.fi-min").forEach((inputField) => {
     inputField.addEventListener("input", (e) => {
@@ -516,12 +518,29 @@ function formatarInput() {
     });
   });
 
+  document.querySelectorAll(".class-input.lils").forEach((inputField) => {
+    inputField.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        let inputId = Number(inputField.id.split("-")[2]) + 1;
+        document.querySelector(`#class-cell-${inputId}`).focus();
+      }
+    });
+  });
+
   document.querySelectorAll(".class-input.class-min").forEach((inputField) => {
     inputField.addEventListener("input", (e) => {
       if (Number(inputField.value) < 1 && inputField.value !== "") {
         inputField.value = 1;
       }
       inputField.value = inputField.value.replace(".", "");
+    });
+    inputField.addEventListener("keypress", (e) => {
+      if (
+        e.key === "Enter" &&
+        Number(inputField.id.split("-")[2]) === classPosition
+      ) {
+        novaLinhaClasse();
+      }
     });
   });
 }
@@ -632,7 +651,7 @@ function apagarTabelaClasses() {
     <td>
       <input
         type="number"
-        class="centered-input class-input"
+        class="centered-input class-input lils"
         id="class-cell-0"
         placeholder="..."
       />
@@ -640,7 +659,7 @@ function apagarTabelaClasses() {
     <td>
       <input
         type="number"
-        class="centered-input class-input"
+        class="centered-input class-input lils"
         id="class-cell-1"
         placeholder="..."
       />
@@ -655,7 +674,7 @@ function apagarTabelaClasses() {
     </td>
   </tr>
     `;
-  tablePosition = 2;
+  classPosition = 2;
   formatarInput();
 }
 
