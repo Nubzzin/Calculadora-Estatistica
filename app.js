@@ -349,7 +349,7 @@ function changePage(pageId) {
       result.innerText = v;
       result.innerText += " " + tipoUnidade + "²";
     } else {
-      result.innerText = "Não Possui";
+      result.innerText = "0 " + tipoUnidade + "²";
     }
     result.parentElement.classList.add("active");
   }
@@ -369,7 +369,7 @@ function changePage(pageId) {
       result.innerText = cv;
       result.innerText += "%";
     } else {
-      result.innerText = "Não Possui/Indefinido";
+      result.innerText = "0%";
     }
     result.parentElement.classList.add("active");
   }
@@ -385,7 +385,7 @@ function changePage(pageId) {
       result.innerText = dp;
       result.innerText += " " + tipoUnidade;
     } else {
-      result.innerText = "Não Possui";
+      result.innerText = "0 " + tipoUnidade;
     }
     result.parentElement.classList.add("active");
   }
