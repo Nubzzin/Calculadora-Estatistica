@@ -76,9 +76,11 @@ function modaBruta(valores) {
   let maxFi = Math.max(...valores.map((v) => v.fi));
 
   let modas = [];
-  for (let i = 0; i < valores.length; i++) {
-    if (valores[i].fi === maxFi) {
-      modas.push([valores[i].li, valores[i].ls]);
+  if (maxFi !== 1) {
+    for (let i = 0; i < valores.length; i++) {
+      if (valores[i].fi === maxFi) {
+        modas.push([valores[i].li, valores[i].ls]);
+      }
     }
   }
 

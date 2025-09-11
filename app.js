@@ -296,22 +296,28 @@ function changePage(pageId) {
   }
   if (informacoes.find((x) => x === "moda")) {
     let modaV = moda(values);
+    let modaN = nomeModa(modaV[0].length);
     result = document.querySelector("#resultado-moda");
-    result.innerText = nomeModa(modaV[0].length);
-    for (let i = 0; i < modaV[0].length - 1; i++) {
-      result.innerText += " " + modaV[0][i] + " |";
+    result.innerText = modaN;
+    if (modaN !== "Amodal") {
+      for (let i = 0; i < modaV[0].length - 1; i++) {
+        result.innerText += " " + modaV[0][i] + " |";
+      }
+      result.innerText += " " + modaV[0][modaV[0].length - 1];
     }
-    result.innerText += " " + modaV[0][modaV[0].length - 1];
     // result.innerText += " " + modaV[0];
     result.parentElement.classList.add("active");
   }
   if (informacoes.find((x) => x === "moda-bruta")) {
     let modaV = modaBruta(values);
+    let modaN = nomeModa(modaV[0].length);
     result = document.querySelector("#resultado-moda-bruta");
-    result.innerText = nomeModa(modaV[0].length);
-    // result.innerText += " " + modaV[0];
-    for (let i = 0; i < modaV[0].length; i++) {
-      result.innerText += " (" + modaV[0][i][0] + " - " + modaV[0][i][1] + ")";
+    result.innerText = modaN;
+    if (modaN !== "Amodal") {
+      for (let i = 0; i < modaV[0].length; i++) {
+        result.innerText +=
+          " (" + modaV[0][i][0] + " - " + modaV[0][i][1] + ")";
+      }
     }
     result.parentElement.classList.add("active");
   }
@@ -502,7 +508,7 @@ function formatarInput() {
       ) {
         novaLinha();
       }
-      if (e.key === "Enter") {
+      if (e.key === "Enter" && e.target.value !== "") {
         let inputId = Number(inputField.id.split("-")[1]) + 1;
         document.querySelector(`#cell-${inputId}`).focus();
       }
@@ -520,7 +526,7 @@ function formatarInput() {
 
   document.querySelectorAll(".class-input.lils").forEach((inputField) => {
     inputField.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") {
+      if (e.key === "Enter" && e.target.value !== "") {
         let inputId = Number(inputField.id.split("-")[2]) + 1;
         document.querySelector(`#class-cell-${inputId}`).focus();
       }
@@ -604,6 +610,7 @@ function apagarTabela() {
     </tr>
   `;
   placeholderSize = 3;
+  t = 0;
 }
 
 function apagarTabelaFi() {
