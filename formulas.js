@@ -1,11 +1,6 @@
 function media(valores) {
   if (componentId !== "classes") {
-    return (
-      Math.round(
-        (valores.reduce((soma, atual) => (soma += atual), 0) / valores.length) *
-          100,
-      ) / 100
-    );
+    return valores.reduce((soma, atual) => (soma += atual), 0) / valores.length;
   } else {
     let soma = 0;
     let fi = 0;
@@ -15,7 +10,7 @@ function media(valores) {
       fi += valores[linha].fi;
     }
     let resultado = soma / fi;
-    return Math.round(resultado * 100) / 100;
+    return resultado;
   }
 }
 
@@ -48,7 +43,7 @@ function mediana(valores) {
 
     let Li = classeMediana.li;
     let fm = classeMediana.fi;
-    let h = classeMediana.ls - classeMediana.li + 1;
+    let h = classeMediana.ls - classeMediana.li;
 
     let mediana = Li + ((metade - Fa) / fm) * h;
     console.log(mediana);
@@ -127,7 +122,7 @@ function agrupamentoDiscreto(valores) {
   soma[0].forEach((x) => {
     soma[1] += x;
   });
-  return [soma, Math.round((soma[1] / fi) * 100) / 100];
+  return [soma, soma[1] / fi];
 }
 
 function variancia(valores) {
@@ -145,7 +140,7 @@ function variancia(valores) {
     soma.forEach((x) => {
       resultado += x;
     });
-    return Math.round(Number(resultado / (valores.length - 1)) * 100) / 100;
+    return Number(resultado / (valores.length - 1));
   } else {
     let somaFi = 0;
     let somaXiFi = 0;
@@ -166,12 +161,12 @@ function variancia(valores) {
 
     let variancia = somaDesvios / (somaFi - 1);
 
-    return Math.round(variancia * 100) / 100;
+    return variancia;
   }
 }
 
 function desvioPadrao(variancia) {
-  return Math.round(Math.sqrt(variancia) * 100) / 100;
+  return Math.sqrt(variancia);
 }
 
 function coeficienteVariacao(desvioPadrao, agrupamentoDiscreto, valores) {
@@ -197,7 +192,7 @@ function coeficienteVariacao(desvioPadrao, agrupamentoDiscreto, valores) {
 
     let desvioPadrao = Math.sqrt(somaDesvios / (somaFi - 1));
 
-    let CV = (desvioPadrao / media) * 100;
+    let CV = (desvioPadrao * 100) / media;
 
     return CV;
   }

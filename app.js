@@ -289,7 +289,7 @@ function changePage(pageId) {
   let result;
   if (informacoes.find((x) => x === "media")) {
     result = document.querySelector("#resultado-media");
-    result.innerText = media(values);
+    result.innerText = Math.round(media(values) * 1000) / 1000;
     result.innerText += " " + tipoUnidade;
     result.parentElement.classList.add("active");
   }
@@ -316,13 +316,12 @@ function changePage(pageId) {
   }
   if (informacoes.find((x) => x === "moda-czuber")) {
     let modaV = modaCzuber(values);
-    console.log(modaV);
     result = document.querySelector("#resultado-moda-czuber");
     if (componentId === "classes") {
       if (modaV[1] === 0) {
         result.innerText = "Não é possível aplicar Czuber";
       } else {
-        result.innerText = "Moda: " + Math.round(modaV[0] * 100) / 100;
+        result.innerText = "Moda: " + Math.round(modaV[0] * 1000) / 1000;
       }
     } else {
       result.innerText = "Apenas para classes";
@@ -331,13 +330,13 @@ function changePage(pageId) {
   }
   if (informacoes.find((x) => x === "mediana")) {
     result = document.querySelector("#resultado-mediana");
-    result.innerText = Math.round(mediana(values) * 100) / 100;
+    result.innerText = Math.round(mediana(values) * 1000) / 1000;
     result.innerText += " " + tipoUnidade;
     result.parentElement.classList.add("active");
   }
   if (informacoes.find((x) => x === "variancia")) {
     result = document.querySelector("#resultado-variancia");
-    let v = variancia(values);
+    let v = Math.round(variancia(values) * 1000) / 1000;
     if (v) {
       result.innerText = v;
       result.innerText += " " + tipoUnidade + "²";
@@ -348,14 +347,17 @@ function changePage(pageId) {
   }
   if (informacoes.find((x) => x === "coeficiente")) {
     result = document.querySelector("#resultado-coeficiente");
-    let cv = coeficienteVariacao(
-      desvioPadrao(variancia(values)),
-      agrupamentoDiscreto(values),
-      values,
-    );
+    let cv =
+      Math.round(
+        coeficienteVariacao(
+          desvioPadrao(variancia(values)),
+          agrupamentoDiscreto(values),
+          values,
+        ) * 1000,
+      ) / 1000;
     let tem3maisDecimal = Math.abs(cv * 100 - Math.round(cv * 100)) > 0;
     console.log(cv);
-    cv = Math.round(cv * 100) / 100;
+    cv = Math.round(cv * 1000) / 1000;
     if (isFinite(cv) && cv > 0) {
       result.innerText = cv;
       result.innerText += "%";
@@ -366,12 +368,12 @@ function changePage(pageId) {
   }
   if (informacoes.find((x) => x === "agrupamento")) {
     result = document.querySelector("#resultado-agrupamento");
-    result.innerText = agrupamentoDiscreto(values)[1];
+    result.innerText = Math.round(agrupamentoDiscreto(values)[1] * 1000) / 1000;
     result.parentElement.classList.add("active");
   }
   if (informacoes.find((x) => x === "desvio")) {
     result = document.querySelector("#resultado-desvio");
-    let dp = desvioPadrao(variancia(values));
+    let dp = Math.round(desvioPadrao(variancia(values)) * 1000) / 1000;
     if (dp) {
       result.innerText = dp;
       result.innerText += " " + tipoUnidade;
@@ -510,6 +512,7 @@ function formatarInput() {
       if (Number(inputField.value) < 1 && inputField.value !== "") {
         inputField.value = 1;
       }
+      inputField.value = inputField.value.replace(".", "");
     });
   });
 
@@ -518,6 +521,7 @@ function formatarInput() {
       if (Number(inputField.value) < 1 && inputField.value !== "") {
         inputField.value = 1;
       }
+      inputField.value = inputField.value.replace(".", "");
     });
   });
 }
