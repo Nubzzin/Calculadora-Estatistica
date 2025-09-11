@@ -174,7 +174,7 @@ function novaLinhaClasse() {
   cell = row.insertCell();
   classPosition++;
   cell.innerHTML = `<input type="number" class="centered-input class-input class-min" id="class-cell-${classPosition}" placeholder="1" min="1">`;
-  document.querySelector(`#class-cell-${classPosition}`).focus();
+  // document.querySelector(`#class-cell-${classPosition}`).focus();
   formatarInput();
 }
 
@@ -547,6 +547,10 @@ function formatarInput() {
         Number(inputField.id.split("-")[2]) === classPosition
       ) {
         novaLinhaClasse();
+      }
+      if (e.key === "Enter" && classPosition > 3) {
+        let inputId = Number(inputField.id.split("-")[2]) + 3;
+        document.querySelector(`#class-cell-${inputId}`).focus();
       }
     });
   });
