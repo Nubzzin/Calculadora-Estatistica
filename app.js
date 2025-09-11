@@ -325,10 +325,11 @@ function changePage(pageId) {
     let modaV = modaCzuber(values);
     result = document.querySelector("#resultado-moda-czuber");
     if (componentId === "classes") {
-      if (modaV[1] === 0) {
+      if (modaV[1] < 0) {
         result.innerText = "Não é possível aplicar Czuber";
       } else {
-        result.innerText = "Moda: " + Math.round(modaV[0] * 1000) / 1000;
+        result.innerText =
+          Math.round(modaV[0] * 1000) / 1000 + " " + tipoUnidade;
       }
     } else {
       result.innerText = "Apenas para classes";

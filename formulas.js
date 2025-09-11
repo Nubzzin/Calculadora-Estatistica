@@ -53,6 +53,7 @@ function mediana(valores) {
 function moda(valores) {
   let mapa = {};
   let modas = [[], 0];
+  if (valores.length === 1) return [[valores[0]], 1];
 
   valores.forEach((x) => {
     mapa[x] = (mapa[x] || 0) + 1;
@@ -62,9 +63,16 @@ function moda(valores) {
       modas[1] = mapa[key];
     }
   }
+
+  const todasIguais = Object.values(mapa).every((fi) => fi === modas[1]);
+
+  if (todasIguais && Object.keys(mapa).length > 1) {
+    return [[], 0];
+  }
+
   for (let key in mapa) {
     if (mapa[key] === modas[1] && modas[1] > 1) {
-      modas[0].push(key);
+      modas[0].push(Number(key));
     }
   }
   return modas;
@@ -75,12 +83,16 @@ function modaBruta(valores) {
 
   let maxFi = Math.max(...valores.map((v) => v.fi));
 
+  const todasIguais = valores.every((v) => v.fi === maxFi);
+
+  if (todasIguais && valores.length > 1) {
+    return [[], 0];
+  }
+
   let modas = [];
-  if (maxFi !== 1) {
-    for (let i = 0; i < valores.length; i++) {
-      if (valores[i].fi === maxFi) {
-        modas.push([valores[i].li, valores[i].ls]);
-      }
+  for (let i = 0; i < valores.length; i++) {
+    if (valores[i].fi === maxFi) {
+      modas.push([valores[i].li, valores[i].ls]);
     }
   }
 
@@ -93,7 +105,11 @@ function modaCzuber(valores) {
   let classesModais = valores.filter((v) => v.fi === maxFi);
 
   if (classesModais.length > 1) {
-    return [[], 0];
+    return [[], -1];
+  }
+
+  if (valores.length === 1) {
+    return [[], -2];
   }
 
   let i = valores.findIndex((v) => v.fi === maxFi);
