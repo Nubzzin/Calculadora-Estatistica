@@ -699,11 +699,11 @@ document.querySelector("#apagar-tabela").addEventListener("click", () => {
   apagarTabela();
 });
 
-// document
-//   .querySelector("#apagar-tabela-classes")
-//   .addEventListener("click", () => {
-//     apagarTabelaClasses();
-//   });
+document
+  .querySelector("#apagar-tabela-classes")
+  .addEventListener("click", () => {
+    apagarTabelaClasses();
+  });
 
 document.querySelectorAll(".task").forEach((task) => {
   task.addEventListener("click", () => {

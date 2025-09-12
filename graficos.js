@@ -79,7 +79,7 @@ function desenharGrafico(values) {
 }
 
 function desenharGraficoClasses(classes) {
-  const labels = classes.map((c) => `${c.li}–${c.ls}`);
+  const labels = classes.map((c) => `${c.li} – ${c.ls}`);
   const data = classes.map((c) => c.fi);
 
   const ctx = document.getElementById("myChart");
