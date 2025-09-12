@@ -365,7 +365,6 @@ function changePage(pageId) {
       ) / 1000;
     let tem3maisDecimal = Math.abs(cv * 100 - Math.round(cv * 100)) > 0;
     cv = Math.round(cv * 1000) / 1000;
-    console.log(cv);
     if (isFinite(cv) && cv > 0) {
       result.innerText = cv;
       result.innerText += "%";
