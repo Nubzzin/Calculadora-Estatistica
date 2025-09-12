@@ -705,6 +705,10 @@ document
     apagarTabelaClasses();
   });
 
+document.querySelector("#apagar-tabela-fi").addEventListener("click", () => {
+  apagarTabelaFi();
+});
+
 document.querySelectorAll(".task").forEach((task) => {
   task.addEventListener("click", () => {
     task.classList.toggle("done");
