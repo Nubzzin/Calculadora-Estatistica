@@ -187,7 +187,7 @@ function desvioPadrao(variancia) {
 
 function coeficienteVariacao(desvioPadrao, agrupamentoDiscreto, valores) {
   if (agrupamentoDiscreto === 0) {
-    if (desvioPadrao === 0) return -1;
+    if (desvioPadrao > 0) return -1;
     return -2;
   }
   if (componentId !== "classes") {

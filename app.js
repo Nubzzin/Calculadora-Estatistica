@@ -345,11 +345,11 @@ function changePage(pageId) {
   if (informacoes.find((x) => x === "variancia")) {
     result = document.querySelector("#resultado-variancia");
     let v = Math.round(variancia(values) * 1000) / 1000;
-    if (v) {
+    if (!isNaN(v) && values.length > 0) {
       result.innerText = v;
       result.innerText += " " + tipoUnidade + "²";
     } else {
-      result.innerText = "0 " + tipoUnidade + "²";
+      result.innerText = "Nao Possui";
     }
     result.parentElement.classList.add("active");
   }
@@ -365,10 +365,11 @@ function changePage(pageId) {
       ) / 1000;
     let tem3maisDecimal = Math.abs(cv * 100 - Math.round(cv * 100)) > 0;
     cv = Math.round(cv * 1000) / 1000;
+    console.log(cv);
     if (isFinite(cv) && cv > 0) {
       result.innerText = cv;
       result.innerText += "%";
-    } else if (cv === 0) {
+    } else if (cv === 0 || isNaN(cv)) {
       result.innerText = "0%";
     } else if (!isFinite(cv)) {
       result.innerText = "Indefinido";
@@ -383,11 +384,11 @@ function changePage(pageId) {
   if (informacoes.find((x) => x === "desvio")) {
     result = document.querySelector("#resultado-desvio");
     let dp = Math.round(desvioPadrao(variancia(values)) * 1000) / 1000;
-    if (dp) {
+    if (!isNaN(dp) && values.length > 0) {
       result.innerText = dp;
       result.innerText += " " + tipoUnidade;
     } else {
-      result.innerText = "0 " + tipoUnidade;
+      result.innerText = "Nao Possui";
     }
     result.parentElement.classList.add("active");
   }
